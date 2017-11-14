@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "node build/dev-server.js",
     "start": "npm run dev",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "server": "node server/index.js"
   },
   "dependencies": {
     "axios": "^0.16.2",

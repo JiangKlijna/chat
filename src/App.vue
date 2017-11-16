@@ -1,6 +1,6 @@
 <template>
     <div id="app" class="hundred">
-        <div id="main" v-bind:class="main_class" v-bind:style="{'margin-top': main_marginTop + 'px'}">
+        <div id="main" v-bind:style="main_style">
             <router-view/>
         </div>
     </div>
@@ -11,17 +11,24 @@ export default {
     name: 'app',
     data: function () {
         return {
-            main_class: null,
-            main_marginTop: 60
+            main_style: {
+                'width': '800px',
+                'height': '800px',
+                'margin-top': '60px',
+            }
         }
     },
     methods: {
         onResize: function () {
-            if (window.innerWidth < 780) { // 调整为移动端样式
-                this.main_class = "hundred";
+            if (window.innerWidth < 800) { // 调整为移动端样式
+                this.main_style['margin-top'] = 0;
+                this.main_style.width = '100%';
+                this.main_style.height = '100%';
             } else { // 调整为pc端样式
-                this.main_class = "pc_main";
-                this.main_marginTop = ((window.innerWidth-780) / (window.screen.width-780)) * 60;
+                let marginTop = parseInt((window.innerWidth-800) / (window.screen.width-800) * 60);
+                this.main_style['margin-top'] = marginTop + 'px';
+                this.main_style.height = (window.innerHeight - marginTop * 2) + 'px';
+                this.main_style.width = '800px';
             }
         }
     },
@@ -47,15 +54,11 @@ html, body, .hundred {
   background-color: #f1f1f1;
 }
 #main {
-    border-radius: 4px;
+    margin: 0 auto;
+    border-radius: 6px;
     background-color: white;
-    box-shadow: 0 0 8px rgba(0,0,0,.1);
+    box-shadow: 0 0 8px rgba(0,0,0,.3);
     vertical-align: middle;
     display: inline-block;
-}
-.pc_main {
-    width: 600px;
-    height: 800px;
-    margin: 0 auto;
 }
 </style>

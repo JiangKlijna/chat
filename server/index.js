@@ -19,6 +19,9 @@ app.use(session({
 // serve pure static assets
 app.use('/', express.static(config.assetsPublicPath));
 
+// set restful api
+require('./routes.js')(app)
+
 // default port where dev server listens for incoming traffic
 const uri = 'http://localhost:' + config.port
 console.log('> Listening at ' + uri + '\n')

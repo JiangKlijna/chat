@@ -1,14 +1,17 @@
 <template>
     <div id="app" class="hundred">
         <div id="main" v-bind:style="main_style">
+            <ToolBar/>
             <router-view/>
         </div>
     </div>
 </template>
 
 <script>
+import ToolBar from './components/ToolBar'
 export default {
     name: 'app',
+    components: {ToolBar},
     data: function () {
         return {
             main_style: {
@@ -35,7 +38,7 @@ export default {
     mounted: function () {
         window.onresize = this.onResize;
         window.onresize();
-    }
+    },
 }
 </script>
 

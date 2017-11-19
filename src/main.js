@@ -8,6 +8,9 @@ import Axios from 'axios'
 Vue.config.productionTip = false
 window.axios = Axios
 
+require('./assets/res.js')
+require('./assets/util.js')
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

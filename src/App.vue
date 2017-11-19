@@ -1,5 +1,5 @@
 <template>
-    <div id="app" class="hundred">
+    <div id="app" v-bind:class="app_class">
         <div id="main" v-bind:style="main_style">
             <ToolBar/>
             <router-view/>
@@ -14,6 +14,7 @@ export default {
     components: {ToolBar},
     data: function () {
         return {
+            app_class: null,
             main_style: {
                 'width': '800px',
                 'height': '800px',
@@ -36,8 +37,12 @@ export default {
         }
     },
     mounted: function () {
+        window.app = this;
         window.onresize = this.onResize;
         window.onresize();
+        // 随机选择一个color
+        var theme_color = window.util.random_choose(window.R.colors);
+        this.app_class = 'mdui-theme-primary-' + theme_color;
     },
 }
 </script>
@@ -48,7 +53,7 @@ export default {
     padding: 0;
     font-family: consolas;
 }
-html, body, .hundred {
+html, body, #app, .hundred {
     width: 100%;
     height: 100%;
 }

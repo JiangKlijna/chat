@@ -32,11 +32,6 @@ export default {
 </script>
 
 <style>
-    #theme {
-        height: 80%;
-        padding: 10px;
-        overflow: scroll;
-    }
     .mdui-col {
         text-align: left;
     }

@@ -1,8 +1,8 @@
 <template>
     <div id="app" v-bind:class="app_class">
         <div id="main" v-bind:style="main_style">
-            <ToolBar/>
-            <router-view/>
+            <ToolBar class="app_title"/>
+            <router-view class="app_body"/>
         </div>
     </div>
 </template>
@@ -73,5 +73,14 @@ html, body, #app, .hundred {
     box-shadow: 0 0 8px rgba(0,0,0,.3);
     vertical-align: middle;
     display: inline-block;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+#main .app_title {
+    min-height: 56px;
+    height: 8%;
+}
+#main .app_body {
+    height: 92%;
 }
 </style>

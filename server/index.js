@@ -7,14 +7,8 @@ const express = require('express')
 let app = express()
 
 // cookie sesstion
-const cookieParser = require('cookie-parser')
-const session = require('cookie-session')
-app.use(cookieParser())
-app.use(session({
-    resave: false,
-    secret: 'jiangKlijna',
-    saveUninitialized: true
-}))
+app.use(require('cookie-parser')())
+app.use(require('cookie-session')(config.session))
 
 // serve pure static assets
 app.use('/', express.static(config.assetsPublicPath));

@@ -1,9 +1,9 @@
 <template>
     <div id="menu" class="mdui-toolbar mdui-color-theme">
-        <a v-on:click="onBack" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">arrow_back</i></a>
+        <a v-on:click="onBack" v-show="!isRoot" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">arrow_back</i></a>
         <span class="mdui-typo-title">{{title}}</span>
         <div class="mdui-toolbar-spacer"></div>
-        <a v-on:click="onClickIcon('/')" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">message</i></a>
+        <a v-on:click="onClickIcon('/')" v-show="!isRoot" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">message</i></a>
         <a v-on:click="onClickIcon('/theme')" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">color_lens</i></a>
         <a class="mdui-btn mdui-btn-icon" mdui-menu="{target: '#menu_item'}"><i class="mdui-icon material-icons">more_vert</i></a>
         <ul id="menu_item" class="mdui-menu mdui-color-theme">
@@ -22,6 +22,7 @@ export default {
     data: function () {
         return {
             title: '消息',
+            isRoot: this.$router.currentRoute.path == '/',
         }
     },
     methods: {
@@ -30,10 +31,15 @@ export default {
         },
         onClickIcon: function (path) {
             this.$router.push(path);
+        },
+        onBeforeEach: function (to, from, next) {
+            this.isRoot = to.path == '/';
+            next();
         }
     },
     mounted: function () {
         window.menu = this;
+        this.$router.beforeEach(this.onBeforeEach);
     }
 }
 </script>

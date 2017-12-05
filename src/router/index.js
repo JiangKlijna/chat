@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Message from '@/components/Message'
 import Theme from '@/components/Theme'
 import Login from '@/components/Login'
+import Regist from '@/components/Regist'
 
 Vue.use(Router)
 
@@ -11,5 +12,6 @@ export default new Router({
         {path: '/', name: 'Message', component: Message},
         {path: '/theme', name: 'Theme', component: Theme},
         {path: '/login', name: 'Login', component: Login},
+        {path: '/regist', name: 'Regist', component: Regist},
     ]
 })

@@ -1,15 +1,19 @@
 <template>
-  <div>
-  </div>
+    <div>
+        <ToolBar class="app_title"/>
+    </div>
 </template>
 
 <script>
+import ToolBar from './ToolBar'
 export default {
-  name: 'Message',
-  data () {
-    return {
+    name: 'Message',
+    components: {ToolBar},
+    data () {
+        return {
+
+        }
     }
-  }
 }
 </script>
 

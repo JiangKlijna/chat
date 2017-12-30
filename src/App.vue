@@ -1,17 +1,15 @@
 <template>
     <div id="app" v-bind:class="app_class">
         <div id="main" v-bind:style="main_style">
-            <ToolBar class="app_title"/>
             <router-view class="app_body"/>
         </div>
     </div>
 </template>
 
 <script>
-import ToolBar from './components/ToolBar'
+
 export default {
     name: 'app',
-    components: {ToolBar},
     data: function () {
         return {
             theme_color: null,

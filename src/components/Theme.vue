@@ -1,7 +1,7 @@
 <template>
     <div id="theme">
         <ToolBar class="app_title"/>
-        <div class="mdui-row-xs-1 mdui-row-sm-2 mdui-row-md-3">
+        <div id="theme_body" class="mdui-row-xs-1 mdui-row-sm-2 mdui-row-md-3">
             <div v-for="color in colors" v-bind:class="'mdui-col mdui-text-color-'+color">
                 <label class="mdui-radio mdui-m-b-1">
                     <input type="radio" name="doc-theme-accent" v-on:click="onClickColor(color)" v-bind:value="color" v-bind:checked="current === color">
@@ -39,5 +39,8 @@ export default {
 <style>
     .mdui-col {
         text-align: left;
+    }
+    #theme_body {
+        padding: 10px;
     }
 </style>

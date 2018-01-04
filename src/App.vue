@@ -73,11 +73,7 @@ html, body, #app, .hundred {
     overflow-y: auto;
     overflow-x: hidden;
 }
-#main .app_title {
-    min-height: 56px;
-    height: 8%;
-}
 #main .app_body {
-    height: 92%;
+    height: 100%;
 }
 </style>

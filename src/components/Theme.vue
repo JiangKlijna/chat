@@ -1,6 +1,6 @@
 <template>
     <div id="theme">
-        <ToolBar class="app_title"/>
+        <ToolBar title="主题"/>
         <div id="theme_body" class="mdui-row-xs-1 mdui-row-sm-2 mdui-row-md-3">
             <div v-for="color in colors" v-bind:class="'mdui-col mdui-text-color-'+color">
                 <label class="mdui-radio mdui-m-b-1">
@@ -31,7 +31,7 @@ export default {
     mounted: function () {
         this.current = app.theme_color;
         this.colors = window.R.colors;
-        window.theme = this;
+        //window.theme = this;
     }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <div id="menu" class="mdui-toolbar mdui-color-theme">
+    <div id="menu" class="app_title mdui-toolbar mdui-color-theme">
         <a v-on:click="onBack" v-show="!isRoot" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">arrow_back</i></a>
         <span class="mdui-typo-title">{{title}}</span>
         <div class="mdui-toolbar-spacer"></div>
@@ -19,9 +19,10 @@
 <script>
 export default {
     name: 'ToolBar',
+    props: ['title'],
     data: function () {
         return {
-            title: '消息',
+            //title: '消息',
             isRoot: this.$router.currentRoute.path == '/',
         }
     },

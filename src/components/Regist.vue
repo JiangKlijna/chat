@@ -1,15 +1,20 @@
 <template>
-  <div>
-  </div>
+    <div id="regist">
+        <ToolBar title="注册"/>
+        <div id="regist_body">
+        </div>
+    </div>
 </template>
 
 <script>
+import ToolBar from './ToolBar'
 export default {
-  name: 'Regist',
-  data () {
-    return {
+    name: 'Regist',
+    components: {ToolBar},
+    data () {
+        return {
+        }
     }
-  }
 }
 </script>
 

@@ -1,6 +1,8 @@
 <template>
-    <div>
-        <ToolBar class="app_title"/>
+    <div id="message">
+        <ToolBar title="消息"/>
+        <div id="message_body">
+        </div>
     </div>
 </template>
 

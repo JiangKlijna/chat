@@ -1,15 +1,20 @@
 <template>
-  <div>
+  <div id="login">
+      <ToolBar title="登陆"/>
+      <div id="login_body">
+      </div>
   </div>
 </template>
 
 <script>
+import ToolBar from './ToolBar'
 export default {
-  name: 'Login',
-  data () {
-    return {
+    name: 'Login',
+    components: {ToolBar},
+    data () {
+        return {
+        }
     }
-  }
 }
 </script>
 

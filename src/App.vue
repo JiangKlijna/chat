@@ -11,7 +11,8 @@ export default {
     name: 'app',
     data: function () {
         return {
-            theme_color: null,
+            accent_color: null,
+            primary_color: null,
             main_style: {
                 'width': '800px',
                 'height': '800px',
@@ -35,7 +36,7 @@ export default {
     },
     computed: {
         app_class: function () {
-            return 'mdui-theme-primary-' + this.theme_color;
+            return 'mdui-theme-primary-' + this.primary_color + ' mdui-theme-accent-' + this.accent_color;
         }
     },
     mounted: function () {
@@ -43,8 +44,8 @@ export default {
         window.onresize = this.onResize;
         window.onresize();
         // 随机选择一个color
-        this.theme_color = window.util.random_choose(window.R.colors);
-        //this.app_class = 'mdui-theme-primary-' + theme_color;
+        this.primary_color = window.util.random_choose(window.R.primary_colors);
+        this.accent_color = window.util.random_choose(window.R.accent_colors);
     },
 }
 </script>

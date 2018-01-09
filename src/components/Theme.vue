@@ -6,7 +6,7 @@
                 <p class="mdui-typo-title mdui-text-color-theme">主题色</p>
                 <div v-for="color in primary_colors" v-bind:class="'mdui-col mdui-text-color-'+color">
                     <label class="mdui-radio mdui-m-b-1">
-                        <input type="radio" name="doc-theme-accent" v-on:click="onClickPrimaryColor(color)" v-bind:value="color" v-bind:checked="current === color">
+                        <input type="radio" name="doc-theme-accent" v-on:click="onClickPrimaryColor(color)" v-bind:value="color" v-bind:checked="current_primary_color === color">
                         <i class="mdui-radio-icon"></i>{{getColorTitle(color)}}
                     </label>
                 </div>
@@ -15,7 +15,7 @@
                 <p class="mdui-typo-title mdui-text-color-theme-accent">强调色</p>
                 <div v-for="color in accent_colors" v-bind:class="'mdui-col mdui-text-color-'+color">
                     <label class="mdui-radio mdui-m-b-1">
-                        <input type="radio" name="doc-theme-accent" v-on:click="onClickAccentColor(color)" v-bind:value="color" v-bind:checked="current === color">
+                        <input type="radio" name="doc-theme-accent" v-on:click="onClickAccentColor(color)" v-bind:value="color" v-bind:checked="current_accent_color === color">
                         <i class="mdui-radio-icon"></i>{{getColorTitle(color)}}
                     </label>
                 </div>
@@ -31,7 +31,6 @@ export default {
     components: {ToolBar},
     data: function () {
         return {
-            current: null,
             accent_colors: [],
             primary_colors: [],
         }
@@ -47,11 +46,18 @@ export default {
             return window.util.toUpperTitle(color);
         }
     },
+    computed: {
+        current_accent_color: function () {
+            return app.accent_color;
+        },
+        current_primary_color: function () {
+            return app.primary_color;
+        }
+    },
     mounted: function () {
-        this.current = app.theme_color;
         this.accent_colors = window.R.accent_colors;
         this.primary_colors = window.R.primary_colors;
-        //window.theme = this;
+        // window.theme = this;
     }
 }
 </script>

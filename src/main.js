@@ -10,6 +10,7 @@ window.axios = Axios
 
 require('./assets/res.js')
 require('./assets/util.js')
+require('./assets/md-avatar.min.js')
 
 /* eslint-disable no-new */
 new Vue({

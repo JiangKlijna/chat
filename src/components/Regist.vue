@@ -17,9 +17,10 @@
             <br><br>
             <button class="mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple mdui-shadow-8" v-on:click="onClickLogin">登 陆</button>
         </div>
-        <div id="regist_show">
-            <p><img v-bind:src="imgurl"></p>
-            <p>{{username}}</p>
+        <br><br>
+        <div id="regist_show" class="mdui-card mdui-ripple" v-show="username !== ''">
+            <p><img v-bind:src="imgurl"/></p><br>
+            <p class="regist_title">{{username}}</p>
         </div>
     </div>
 </template>
@@ -44,6 +45,10 @@ export default {
                 this.imgurl = null;
                 return;
             }
+            if (n.length >= 10) {
+                this.username = o;
+                return;
+            }
             if (n[0] === o[0]) return;
             this.imgurl = new mdAvatar({size: 80, text: n}).toDataURL();
         }
@@ -59,5 +64,13 @@ export default {
 <style scoped>
     #regist_body {
         text-align: left;
+    }
+    .mdui-card {
+        width: 50%;
+        margin: 0 auto;
+    }
+    .regist_title {
+        font-size: 22px;
+        font-weight: 700;
     }
 </style>

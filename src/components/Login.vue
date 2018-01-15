@@ -6,7 +6,7 @@
             <div class="mdui-textfield mdui-textfield-floating-label">
                 <i class="mdui-icon material-icons">account_circle</i>
                 <label class="mdui-textfield-label">账号:</label>
-                <input class="mdui-textfield-input" v-model:value="username"/>
+                <input class="mdui-textfield-input" v-model:value="userid"/>
             </div>
             <br>
             <div class="mdui-textfield mdui-textfield-floating-label">
@@ -16,6 +16,11 @@
             </div>
             <br><br>
             <button class="mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple mdui-shadow-8" v-on:click="onClickLogin">登 陆</button>
+        </div>
+        <br><br>
+        <div id="login_show" class="mdui-card mdui-ripple" v-show="username !== ''">
+            <p><img v-bind:src="imgurl"/></p><br>
+            <p class="login_title">{{username}}</p>
         </div>
     </div>
 </template>
@@ -27,7 +32,9 @@ export default {
     components: {ToolBar},
     data () {
         return {
+            imgurl: null,
             username: '',
+            userid: '',
             password: ''
         }
     },
@@ -42,5 +49,9 @@ export default {
 <style scoped>
     #login_body {
        text-align: left;
+    }
+    .login_title {
+        font-size: 22px;
+        font-weight: 700;
     }
 </style>

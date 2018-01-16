@@ -50,7 +50,7 @@ export default {
                 return;
             }
             if (n[0] === o[0]) return;
-            this.imgurl = new mdAvatar({size: 80, text: n}).toDataURL();
+            this.imgurl = util.mdAvatar(80, n).toDataURL();
         }
     },
     methods: {

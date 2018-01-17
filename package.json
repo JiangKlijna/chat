@@ -6,9 +6,9 @@
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
-    "start": "npm run dev",
     "build": "node build/build.js",
-    "server": "node server/index.js"
+    "server": "node server/index.js",
+    "devplus": "node server/devplus.js"
   },
   "dependencies": {
     "axios": "^0.16.2",

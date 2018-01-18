@@ -92,7 +92,16 @@ devMiddleware.waitUntilValid(() => {
     if (autoOpenBrowser && process.env.NODE_ENV !== 'testing') {
       opn(uri)
     }
+    // plus
+    const cfg = require('./config.js')
+    // cookie sesstion
+    app.use(require('cookie-parser')())
+    app.use(require('cookie-session')(cfg.session))
+    // set restful api
+    require('./routes.js')(app)
     server = app.listen(port)
+    // set socket.io
+    require('./socket.js')(server)
     _resolve()
   })
 })

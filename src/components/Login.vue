@@ -38,6 +38,16 @@ export default {
             password: ''
         }
     },
+    watch: {
+        username: function (n, o) {
+            if (n === null || n === '') {
+                this.imgurl = null;
+                return;
+            }
+            if (n[0] === o[0]) return;
+            this.imgurl = util.mdAvatar(80, n).toDataURL();
+        }
+    },
     methods: {
         onClickLogin() {
         }
@@ -49,6 +59,10 @@ export default {
 <style scoped>
     #login_body {
        text-align: left;
+    }
+    #login_show {
+        width: 50%;
+        margin: 0 auto;
     }
     .login_title {
         font-size: 22px;

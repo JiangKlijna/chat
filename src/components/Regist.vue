@@ -65,7 +65,7 @@ export default {
     #regist_body {
         text-align: left;
     }
-    .mdui-card {
+    #regist_show {
         width: 50%;
         margin: 0 auto;
     }

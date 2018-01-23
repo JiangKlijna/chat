@@ -7,6 +7,13 @@ let mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 mongoose.connect(config.mongoUrl, {useMongoClient:true});
 
+//connect success
+mongoose.connection.on('connected', () => console.log('Mongoose connection open to ' + config.mongoUrl));
+//connect error
+mongoose.connection.on('error', err => console.log('Mongoose connection error: ' + err));
+//disconnected
+mongoose.connection.on('disconnected', () => console.log('Mongoose connection disconnected'));
+
 // userid increase
 const Userid_id = "jiangKlijna"
 let UseridSchema = new mongoose.Schema({
@@ -16,10 +23,10 @@ let UseridSchema = new mongoose.Schema({
 let Userid = mongoose.model('Userid', UseridSchema);
 // 如果ui已经存在， 不存在则创建一个
 Userid.findById(Userid_id, function (err, ui) {
-    console.log("19", err, ui);
     if (err) return console.log(err);
     if (ui) return;
-    new Userid({_id: Userid_id}).save();
+    let u = new Userid({_id: Userid_id, seq: 1});
+    u.save();
 });
 
 // User
@@ -33,8 +40,7 @@ let UserSchema = new mongoose.Schema({
 UserSchema.pre('save', function(next) {
     let u = this;
     Userid.findByIdAndUpdate({_id: Userid_id}, {$inc: {seq: 1}}, function(err, counter) {
-        console.log("36", err, counter);
-        if(err) return next(err);
+        if(err || counter === null) return next(err);
         u.userid = counter.seq;
         next();
     });
@@ -51,6 +57,5 @@ if(module === require.main) {
     u.save(function (err) {
         if(err) console.log(err)
     });
-    // console.log(u)
-    //mongoose.disconnect(m => console.log(m));
+    console.log(u);
 }

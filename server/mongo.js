@@ -1,8 +1,10 @@
 
+// dao
+// mongoose model
+
 // config
 const config = require('./config.js');
 
-// mongoose model
 let mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 mongoose.connect(config.mongoUrl, {useMongoClient:true});

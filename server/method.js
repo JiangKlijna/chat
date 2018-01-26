@@ -1,3 +1,0 @@
-
-// service
-// mongo Schema methods

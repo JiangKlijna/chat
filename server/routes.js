@@ -2,6 +2,8 @@
 // control
 // restful api
 
+const {us} = require("./methods.js")
+
 // generator
 const gen = function (method, path, fun) {
     fun.setting = app => eval(`app.${method}('${path}', fun)`);

@@ -9,6 +9,8 @@ let app = express()
 // cookie sesstion
 app.use(require('cookie-parser')())
 app.use(require('cookie-session')(config.session))
+// post body
+app.use(require('body-parser').json());
 
 // serve pure static assets
 app.use('/', express.static(config.assetsPublicPath));

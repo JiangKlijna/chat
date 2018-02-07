@@ -97,6 +97,8 @@ devMiddleware.waitUntilValid(() => {
     // cookie sesstion
     app.use(require('cookie-parser')())
     app.use(require('cookie-session')(cfg.session))
+    // post body
+    app.use(require('body-parser').json());
     // set restful api
     require('./routes.js')(app)
     server = app.listen(port)

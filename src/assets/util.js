@@ -21,5 +21,18 @@ window.util = {
             text: text,
             fontFamily: 'consolas'
         });
+    },
+    test_params: function () {
+         for (var i in arguments) {
+            var p = arguments[i];
+            if (!p) return false;
+         }
+         return true;
+    },
+    dialog: {
+        error: function (content) {
+            location.hash += '#';
+            mdui.alert(content, R.Str.ERROR, null, {confirmText: '确 定'});
+        }
     }
 };

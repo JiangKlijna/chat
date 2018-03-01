@@ -1,11 +1,10 @@
-
 // control
 // restful api
 
 const {us} = require("./methods.js")
 
 // generator function
-const gen = function (method, path, fun) {
+const gen = (method, path, fun) => {
     fun.setting = app => eval(`app.${method}('${path}', fun)`);
     return fun;
 };
@@ -14,19 +13,30 @@ const gen = function (method, path, fun) {
 const Params = {
     illegal: {code: 1, msg: 'Illegal parameters'},
     get: (req, key) => req.body[key] || req.query[key],
-    test() {for (let p of arguments) if (!p) return false; return true;}
+    test() {
+        for (let p of arguments) if (!p) return false;
+        return true;
+    }
 };
 
 // routes
 const routes = [
-    // 登陆
-    gen('post', '/user/sign/in', function (req, res) {
-        res.send('signin')
+    /**
+     * 登陆
+     * userid 用户ID
+     * password 用户密码
+     */
+    gen('post', '/user/sign/in', async (req, res) => {
+        let userid = Params.get(req, 'userid');
+        let password = Params.get(req, 'password');
+        if (!Params.test(userid, password)) return res.json(Params.illegal);
+        let u = await us.verification(userid, password);
+        res.json(u);
     }),
     /**
      * 注册
      * username 用户名(可修改)
-     * password 用户密码
+     * password 用户密码(明文)
      */
     gen('post', '/user/sign/up', async (req, res) => {
         let username = Params.get(req, 'username');
@@ -57,4 +67,6 @@ const routes = [
     }),
 ]
 
-module.exports = app => {for (let r of routes) r.setting(app)};
+module.exports = app => {
+  for (let r of routes) r.setting(app)
+};

@@ -4,11 +4,18 @@
 
 const {us} = require("./methods.js")
 
-// generator
+// generator function
 const gen = function (method, path, fun) {
     fun.setting = app => eval(`app.${method}('${path}', fun)`);
     return fun;
-}
+};
+
+// parameters object
+const Params = {
+    illegal: {code: 1, msg: 'Illegal parameters'},
+    get: (req, key) => req.body[key] || req.query[key],
+    test() {for (let p of arguments) if (!p) return false; return true;}
+};
 
 // routes
 const routes = [
@@ -16,9 +23,17 @@ const routes = [
     gen('post', '/user/sign/in', function (req, res) {
         res.send('signin')
     }),
-    // 注册
-    gen('post', '/user/sign/up', function (req, res) {
-        res.send('signup')
+    /**
+     * 注册
+     * username 用户名(可修改)
+     * password 用户密码
+     */
+    gen('post', '/user/sign/up', async (req, res) => {
+        let username = Params.get(req, 'username');
+        let password = Params.get(req, 'password');
+        if (!Params.test(username, password)) return res.json(Params.illegal);
+        let u = await us.regist(username, password);
+        res.json(u);
     }),
     // 搜索
     gen('post', '/user/search', function (req, res) {
@@ -42,4 +57,4 @@ const routes = [
     }),
 ]
 
-module.exports = app => {for (var r of routes) r.setting(app)};
+module.exports = app => {for (let r of routes) r.setting(app)};

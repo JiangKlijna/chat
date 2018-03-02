@@ -16,7 +16,9 @@ const Params = {
     test() {
         for (let p of arguments) if (!p) return false;
         return true;
-    }
+    },
+    failure: (msg) => ({code: 1, msg: msg}),
+    success: (obj) => ({code: 0, obj: obj}),
 };
 
 // routes
@@ -31,7 +33,7 @@ const routes = [
         let password = Params.get(req, 'password');
         if (!Params.test(userid, password)) return res.json(Params.illegal);
         let u = await us.verification(userid, password);
-        res.json(u);
+        res.json(Params.success(u));
     }),
     /**
      * 注册
@@ -43,7 +45,13 @@ const routes = [
         let password = Params.get(req, 'password');
         if (!Params.test(username, password)) return res.json(Params.illegal);
         let u = await us.regist(username, password);
-        res.json(u);
+        res.json(Params.success(u));
+    }),
+    /**
+     * 判断是否登陆，返回以登陆的用户信息
+     */
+    gen('post', '/user/login/is', async (req, res) => {
+        res.json(Params.success(req.session.user));
     }),
     // 搜索
     gen('post', '/user/search', function (req, res) {

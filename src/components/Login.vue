@@ -53,7 +53,7 @@ export default {
     methods: {
         onClickLogin() {
             if (!util.test_params(this.userid, this.password)) return;
-            axios.post(R.URL.LOGIN_URL, {username: this.username, password: this.password}).then(function (obj) {
+            axios.post(R.URL.LOGIN_URL, {userid: this.userid, password: this.password}).then(function (obj) {
                 if (obj.data.code !== 0) util.dialog.error(R.Str.ERROR_NETWORK);
                 console.log(obj.data);
             })

@@ -23,12 +23,19 @@ export default {
     data: function () {
         return {
             //title: '消息',
-            isRoot: this.$router.currentRoute.path == '/',
+            isRoot: this.$router.currentRoute.path === '/',
         }
     },
     methods: {
         onBack: function () {
-            this.$router.back();
+            var hash = location.hash, n = 1, i;
+            for (i = hash.length-1; i >= 0; i--) {
+                if (hash[i] === '#') n++;
+                else break;
+            }
+            for (i = 0; i < n; i++) {
+                this.$router.back();
+            }
         },
         onClickIcon: function (path) {
             this.$router.push(path);

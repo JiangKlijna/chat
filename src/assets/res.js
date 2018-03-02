@@ -10,6 +10,9 @@ window.R = {
   },
   URL: {
     // 注册url
-    REQIST_URL: 'user/sign/up'
+    REQIST_URL: 'user/sign/up',
+    // 登陆url
+    LOGIN_URL: 'user/sign/in',
+
   }
 };

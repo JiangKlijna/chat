@@ -6,13 +6,15 @@
             <div class="mdui-textfield mdui-textfield-floating-label">
                 <i class="mdui-icon material-icons">account_circle</i>
                 <label class="mdui-textfield-label">账号:</label>
-                <input class="mdui-textfield-input" v-model:value="userid"/>
+                <input class="mdui-textfield-input" v-model:value="userid" required/>
+                <div class="mdui-textfield-error">id不能为空</div>
             </div>
             <br>
             <div class="mdui-textfield mdui-textfield-floating-label">
                 <i class="mdui-icon material-icons">lock</i>
                 <label class="mdui-textfield-label">密码:</label>
-                <input class="mdui-textfield-input" v-model:value="password" type="password"/>
+                <input class="mdui-textfield-input" v-model:value="password" type="password" required/>
+                <div class="mdui-textfield-error">密码不能为空</div>
             </div>
             <br><br>
             <button class="mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple mdui-shadow-8" v-on:click="onClickLogin">登 陆</button>
@@ -50,6 +52,11 @@ export default {
     },
     methods: {
         onClickLogin() {
+            if (!util.test_params(this.userid, this.password)) return;
+            axios.post(R.URL.LOGIN_URL, {username: this.username, password: this.password}).then(function (obj) {
+                if (obj.data.code !== 0) util.dialog.error(R.Str.ERROR_NETWORK);
+                console.log(obj.data);
+            })
         }
     }
 }

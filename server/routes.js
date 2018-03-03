@@ -32,8 +32,12 @@ const routes = [
         let userid = Params.get(req, 'userid');
         let password = Params.get(req, 'password');
         if (!Params.test(userid, password)) return res.json(Params.illegal);
-        let u = await us.verification(userid, password);
-        res.json(Params.success(u));
+        try {
+            let u = await us.verification(userid, password);
+            res.json(Params.success(u));
+        } catch (e) {
+            res.json(Params.failure(e));
+        }
     }),
     /**
      * 注册
@@ -44,8 +48,12 @@ const routes = [
         let username = Params.get(req, 'username');
         let password = Params.get(req, 'password');
         if (!Params.test(username, password)) return res.json(Params.illegal);
-        let u = await us.regist(username, password);
-        res.json(Params.success(u));
+        try {
+            let u = await us.regist(username, password);
+            res.json(Params.success(u));
+        } catch (e) {
+            res.json(Params.failure(e));
+        }
     }),
     /**
      * 判断是否登陆，返回以登陆的用户信息

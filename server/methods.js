@@ -1,4 +1,3 @@
-
 // service
 // mongo Schema methods
 
@@ -10,11 +9,13 @@ const userService = {
      * 验证用户密码
      * @param userid
      * @param password
-     * @returns {Promise<any>}
+     * @returns {Promise<User>}
      */
     verification: (userid, password) => new Promise((resolve, reject) => {
-        let u = new User({userid: userid, password: password});
-
+        User.findOne({userid:userid}, (err, u) => {
+            if(err) return reject(err);
+            resolve(u.password === password ? u : null);
+        })
     }),
     /**
      * 注册
@@ -34,3 +35,11 @@ const userService = {
 module.exports = {
     us: userService
 };
+
+// test
+if(module === require.main) {
+    (async () => {
+        let u = await userService.verification('1', '123');
+        console.log("await", u)
+    })()
+}

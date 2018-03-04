@@ -34,7 +34,8 @@ const routes = [
         if (!Params.test(userid, password)) return res.json(Params.illegal);
         try {
             let u = await us.verification(userid, password);
-            res.json(Params.success(u));
+            if (u) req.session.user = u;
+            res.json(Params.success(u !== null));
         } catch (e) {
             res.json(Params.failure(e));
         }

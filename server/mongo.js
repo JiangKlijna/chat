@@ -1,4 +1,3 @@
-
 // dao
 // mongoose model
 
@@ -48,14 +47,14 @@ UserSchema.pre('save', function(next) {
     });
 });
 
+let User = mongoose.model('User', UserSchema);
 module.exports = {
-    User: mongoose.model('User', UserSchema),
+    User: User,
 };
 
 // test
 if(module === require.main) {
-    let User = mongoose.model('User', UserSchema);
-    let u = new User({userid: 3, username: "cj2", password: "123", add_time:new Date()});
+    let u = new User({username: "cj", password: "123", add_time:new Date()});
     u.save(function (err) {
         if(err) console.log(err)
     });

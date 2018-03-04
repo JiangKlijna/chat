@@ -60,7 +60,7 @@ const routes = [
      * 判断是否登陆，返回以登陆的用户信息
      */
     gen('post', '/user/login/is', async (req, res) => {
-        res.json(Params.success(req.session.user));
+        res.json(Params.success(req.session.user.info()));
     }),
     // 搜索
     gen('post', '/user/search', function (req, res) {

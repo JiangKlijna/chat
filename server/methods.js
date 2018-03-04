@@ -30,6 +30,17 @@ const userService = {
             else resolve(u);
         })
     }),
+    /**
+     * 搜索用户
+     * @param userobj
+     * @returns {Promise<User>}
+     */
+    search: (userobj) => new Promise((resolve, reject) => {
+        User.find(userobj, (err, u) => {
+            if(err) return reject(err);
+            resolve(u);
+        })
+    }),
 }
 
 module.exports = {

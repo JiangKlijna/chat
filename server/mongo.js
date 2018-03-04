@@ -46,6 +46,7 @@ UserSchema.pre('save', function(next) {
         next();
     });
 });
+UserSchema.methods.info = () => ({userid: this.userid, username: this.username});
 
 let User = mongoose.model('User', UserSchema);
 module.exports = {

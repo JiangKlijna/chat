@@ -37,9 +37,20 @@ const userService = {
      */
     search: (userobj) => new Promise((resolve, reject) => {
         User.find(userobj, '-__v -_id -add_time -password', (err, u) => {
-            if(err) return reject(err);
-            resolve(u);
+            if(err) reject(err);
+            else resolve(u);
         })
+    }),
+    /**
+     * 修改用户信息
+     * @param userobj
+     * @returns {Promise<any>}
+     */
+    update: (userid, userobj) => new Promise((resolve, reject) => {
+        User.update({userid}, userobj, (err, u) => {
+            if(err) reject(err);
+            else resolve(u);
+        });
     }),
 }
 
@@ -50,7 +61,9 @@ module.exports = {
 // test
 if(module === require.main) {
     (async () => {
-        let u = await userService.verification('1', '123');
+        let u = await userService.verification('1', 'update');
         console.log("await", u)
+        let r = await userService.update(1, {username: 'update'});
+        console.log("await", r)
     })()
 }

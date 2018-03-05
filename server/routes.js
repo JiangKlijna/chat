@@ -89,13 +89,26 @@ const routes = [
             res.json(Params.failure(e));
         }
     }),
-    // 修改一个用户信息，只有自己才能修改
-    gen('post', '/user/update', function (req, res) {
-        res.send('update')
-    }),
-    // 获得一个用户的详细信息
-    gen('post', '/user/info', function (req, res) {
-        res.send('info')
+    /**
+     * 修改用户的username或者password
+     * 必须登陆，只有自己才能修改
+     */
+    gen('post', '/user/update', async function (req, res) {
+        if (!req.session.user) return res.json(Params.illegal);
+        let userobj;
+        let username = Params.get(req, 'username');
+        if (Params.test(username)) userobj = {username};
+
+        let password = Params.get(req, 'password');
+        if (Params.test(password)) userobj = {password};
+
+        if (!userobj) return res.json(Params.illegal);
+        try {
+            let re = await us.update(req.session.user.userid, userobj);
+            res.json(Params.success(re));
+        } catch (e) {
+            res.json(Params.failure(e));
+        }
     }),
     // 获得消息列表
     gen('post', '/message/list', function (req, res) {

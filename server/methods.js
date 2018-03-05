@@ -12,7 +12,7 @@ const userService = {
      * @returns {Promise<User>}
      */
     verification: (userid, password) => new Promise((resolve, reject) => {
-        User.findOne({userid:userid}, (err, u) => {
+        User.findOne({userid}, (err, u) => {
             if(err) return reject(err);
             resolve(u.password === password ? u : null);
         })
@@ -24,7 +24,7 @@ const userService = {
      * @returns {Promise<User>}
      */
     regist: (username, password) => new Promise((resolve, reject) => {
-        let u = new User({username: username, password: password, add_time:new Date()});
+        let u = new User({username, password, add_time:new Date()});
         u.save(function (err) {
             if(err) reject(err);
             else resolve(u);
@@ -36,7 +36,7 @@ const userService = {
      * @returns {Promise<User>}
      */
     search: (userobj) => new Promise((resolve, reject) => {
-        User.find(userobj, (err, u) => {
+        User.find(userobj, '-__v -_id -add_time -password', (err, u) => {
             if(err) return reject(err);
             resolve(u);
         })

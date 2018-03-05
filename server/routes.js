@@ -17,8 +17,8 @@ const Params = {
         for (let p of arguments) if (!p) return false;
         return true;
     },
-    failure: (msg) => ({code: 1, msg: msg}),
-    success: (obj) => ({code: 0, obj: obj}),
+    failure: (msg) => ({code: 1, msg: msg.toString()}),
+    success: (obj) => ({code: 0, obj}),
 };
 
 // routes
@@ -62,9 +62,32 @@ const routes = [
     gen('post', '/user/login/is', async (req, res) => {
         res.json(Params.success(req.session.user.info()));
     }),
-    // 搜索
-    gen('post', '/user/search', function (req, res) {
-        res.send('search')
+    /**
+     * 注销
+     */
+    gen('post', '/user/logout', async (req, res) => {
+        req.session.user = null;
+        res.json(Params.success());
+    }),
+    //
+    /**
+     * 通过userid或者username搜索用户，优先userid
+     */
+    gen('post', '/user/search', async function (req, res) {
+        let userobj;
+        let userid = Params.get(req, 'userid');
+        if (Params.test(userid)) userobj = {userid};
+
+        let username = Params.get(req, 'username');
+        if (Params.test(username)) userobj = {username};
+
+        if (!userobj) return res.json(Params.illegal);
+        try {
+            let re = await us.search(userobj);
+            res.json(Params.success(re));
+        } catch (e) {
+            res.json(Params.failure(e));
+        }
     }),
     // 修改一个用户信息，只有自己才能修改
     gen('post', '/user/update', function (req, res) {

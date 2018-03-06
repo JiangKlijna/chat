@@ -5,6 +5,7 @@ import Theme from '@/components/Theme'
 import Login from '@/components/Login'
 import Regist from '@/components/Regist'
 import Person from '@/components/Person'
+import Search from '@/components/Search'
 
 Vue.use(Router)
 
@@ -15,5 +16,6 @@ export default new Router({
         {path: '/login', name: 'Login', component: Login},
         {path: '/regist', name: 'Regist', component: Regist},
         {path: '/person', name: 'Person', component: Person},
+        {path: '/search', name: 'Search', component: Search},
     ]
 })

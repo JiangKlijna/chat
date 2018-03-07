@@ -52,7 +52,7 @@ export default {
                 return;
             }
             if (n[0] === o[0]) return;
-            this.imgurl = util.mdAvatar(80, n).toDataURL();
+            this.imgurl = util.mdAvatar(80, n);
         }
     },
     methods: {

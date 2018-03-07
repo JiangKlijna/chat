@@ -43,7 +43,7 @@ export default {
     },
     methods: {
         toAvatarUrl: function (text) {
-            return util.mdAvatar(60, text).toDataURL();
+            return util.mdAvatar(60, text);
         }
     },
     watch: {
@@ -60,6 +60,4 @@ export default {
 #search_body {
     text-align: left;
 }
-  .mdui-card {
-  }
 </style>

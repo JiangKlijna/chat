@@ -1,4 +1,5 @@
-
+// 头像url缓存
+window.Avatar_Cache = [];
 // util
 window.util = {
     random_choose: function (arr) {
@@ -16,11 +17,15 @@ window.util = {
         }
     },
     mdAvatar: function (size, text) {
-        return new mdAvatar({
+        var url = Avatar_Cache[text[0]];
+        if (url) return url;
+        var url = new mdAvatar({
             size: size,
             text: text,
             fontFamily: 'consolas'
-        });
+        }).toDataURL();
+        Avatar_Cache[text[0]] = url;
+        return url;
     },
     test_params: function () {
          for (var i in arguments) {

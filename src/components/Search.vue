@@ -6,22 +6,22 @@
                 <label class="mdui-textfield-label">请输入userid或username</label>
                 <input class="mdui-textfield-input" v-model="key"/>
             </div>
-            <div>
-                <div class="mdui-card mdui-ripple">
+            <div v-if="userById" class="mdui-row-xs-1 mdui-row-sm-2 mdui-row-md-3">
+                <div class="mdui-card mdui-ripple mdui-col">
                     <div class="mdui-card-header">
-                        <img class="mdui-card-header-avatar"/>
-                        <div class="mdui-card-header-title"></div>
-                        <div class="mdui-card-header-subtitle"></div>
+                        <img class="mdui-card-header-avatar" v-bind:src="toAvatarUrl(userById.username)"/>
+                        <div class="mdui-card-header-title mdui-text-color-theme-accent">{{userById.userid}}</div>
+                        <div class="mdui-card-header-subtitle">{{userById.username}}</div>
                     </div>
                 </div>
-                <div class="mdui-divider"></div>
             </div>
+            <br>
             <div class="mdui-row-xs-1 mdui-row-sm-2 mdui-row-md-3">
-                <div  v-for="u in usersByName" class="mdui-m-b-1 mdui-card mdui-ripple">
+                <div v-for="u in usersByName" class="mdui-col mdui-card mdui-ripple">
                     <div class="mdui-card-header">
-                        <img class="mdui-card-header-avatar"/>
-                        <div class="mdui-card-header-title"></div>
-                        <div class="mdui-card-header-subtitle"></div>
+                      <img class="mdui-card-header-avatar" v-bind:src="toAvatarUrl(u.username)"/>
+                      <div class="mdui-card-header-title">{{u.userid}}</div>
+                      <div class="mdui-card-header-subtitle mdui-text-color-theme-accent">{{u.username}}</div>
                     </div>
                 </div>
             </div>
@@ -37,8 +37,13 @@ export default {
     data () {
         return {
             key: '',
-            userById: {},
+            userById: null,
             usersByName: [],
+        }
+    },
+    methods: {
+        toAvatarUrl: function (text) {
+            return util.mdAvatar(60, text).toDataURL();
         }
     },
     watch: {
@@ -55,4 +60,6 @@ export default {
 #search_body {
     text-align: left;
 }
+  .mdui-card {
+  }
 </style>

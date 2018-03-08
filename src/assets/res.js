@@ -13,6 +13,7 @@ window.R = {
     REQIST_URL: 'user/sign/up',
     // 登陆url
     LOGIN_URL: 'user/sign/in',
-
+    // 搜索url
+    SEARCH_URL: 'user/search',
   }
 };

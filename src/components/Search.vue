@@ -44,12 +44,23 @@ export default {
     methods: {
         toAvatarUrl: function (text) {
             return util.mdAvatar(60, text);
+        },
+        search: function (sobj) {
+            var self = this;
+            axios.post(R.URL.SEARCH_URL, sobj).then(function (obj) {
+                if (obj.data.code !== 0) return util.dialog.error(R.Str.ERROR_NETWORK);
+                if (sobj.userid) self.userById = obj.data.obj[0];
+                if (sobj.username) self.usersByName = obj.data.obj;
+            })
         }
     },
     watch: {
         key: function (n) {
-            if (n === '') return
-            console.log(n);
+            if (n === '') return;
+            // search by username
+            this.search({username: n});
+            // search by userid
+            if(!isNaN(n)) this.search({userid: n});
         }
     }
 }

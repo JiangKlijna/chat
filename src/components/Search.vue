@@ -8,7 +8,7 @@
             </div>
             <div v-if="userById" class="mdui-row-xs-1 mdui-row-sm-2 mdui-row-md-3">
                 <div class="mdui-card mdui-ripple mdui-col">
-                    <div class="mdui-card-header">
+                    <div class="mdui-card-header" v-on:click="onClickUser(userById)">
                         <img class="mdui-card-header-avatar" v-bind:src="toAvatarUrl(userById.username)"/>
                         <div class="mdui-card-header-title mdui-text-color-theme-accent">{{userById.userid}}</div>
                         <div class="mdui-card-header-subtitle">{{userById.username}}</div>
@@ -18,10 +18,10 @@
             <br>
             <div class="mdui-row-xs-1 mdui-row-sm-2 mdui-row-md-3">
                 <div v-for="u in usersByName" class="mdui-col mdui-card mdui-ripple">
-                    <div class="mdui-card-header">
-                      <img class="mdui-card-header-avatar" v-bind:src="toAvatarUrl(u.username)"/>
-                      <div class="mdui-card-header-title">{{u.userid}}</div>
-                      <div class="mdui-card-header-subtitle mdui-text-color-theme-accent">{{u.username}}</div>
+                    <div class="mdui-card-header" v-on:click="onClickUser(u)">
+                        <img class="mdui-card-header-avatar" v-bind:src="toAvatarUrl(u.username)"/>
+                        <div class="mdui-card-header-title">{{u.userid}}</div>
+                        <div class="mdui-card-header-subtitle mdui-text-color-theme-accent">{{u.username}}</div>
                     </div>
                 </div>
             </div>
@@ -44,6 +44,9 @@ export default {
     methods: {
         toAvatarUrl: function (text) {
             return util.mdAvatar(60, text);
+        },
+        onClickUser: function (u) {
+            this.$router.push('/chat?userid=' + u.userid);
         },
         search: function (sobj) {
             var self = this;

@@ -58,8 +58,12 @@ export default {
         }
     },
     watch: {
-        key: function (n) {
+        key: function (n, o) {
             if (n === '') return;
+            if (n.length >= 10) {
+                this.key = o;
+                return;
+            }
             // search by username
             this.search({username: n});
             // search by userid

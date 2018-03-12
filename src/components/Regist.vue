@@ -17,7 +17,14 @@
                 <div class="mdui-textfield-error">密码不能为空</div>
             </div>
             <br><br>
-            <button class="mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple mdui-shadow-8" v-on:click="onClickRegist">注 册</button>
+            <div class="mdui-row">
+                <div class="mdui-col-xs-6">
+                    <button class="mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple mdui-shadow-8" v-on:click="onClickRegist">注 册</button>
+                </div>
+                <div class="mdui-col-xs-6">
+                    <button class="mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple mdui-shadow-8" v-on:click="onClickLogin">登 陆</button>
+                </div>
+            </div>
         </div>
         <br><br>
         <div id="regist_show" class="mdui-card mdui-ripple" v-show="username !== ''">
@@ -62,6 +69,9 @@ export default {
                 if (obj.data.code !== 0) util.dialog.error(R.Str.ERROR_NETWORK);
                 console.log(obj.data);
             })
+        },
+        onClickLogin: function () {
+            this.$router.push('login');
         }
     }
 }

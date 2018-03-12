@@ -27,7 +27,7 @@
             </div>
           </div>
         <br><br>
-        <div id="login_show" class="mdui-card mdui-ripple" v-show="username !== ''">
+        <div id="login_show" class="mdui-card mdui-ripple" v-show="username !== null">
             <p><img v-bind:src="imgurl"/></p><br>
             <p class="login_title">{{username}}</p>
         </div>
@@ -48,6 +48,18 @@ export default {
         }
     },
     watch: {
+        userid: function (n) {
+            if (n === '' || isNaN(n)) {
+                this.username = null;
+                return;
+            }
+            var self = this;
+            // search by userid
+            axios.post(R.URL.SEARCH_URL, {userid: n}).then(function (obj) {
+                if (obj.data.code !== 0) return util.dialog.error(R.Str.ERROR_NETWORK);
+                self.username = obj.data.obj[0].username;
+            })
+        },
         username: function (n, o) {
             if (n === null || n === '') {
                 this.imgurl = null;

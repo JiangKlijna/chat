@@ -27,7 +27,7 @@
             </div>
           </div>
         <br><br>
-        <div id="login_show" class="mdui-card mdui-ripple" v-show="username !== null">
+        <div id="login_show" class="mdui-card mdui-ripple" v-show="username !== ''">
             <p><img v-bind:src="imgurl"/></p><br>
             <p class="login_title">{{username}}</p>
         </div>

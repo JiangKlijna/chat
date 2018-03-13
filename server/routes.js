@@ -60,7 +60,9 @@ const routes = [
      * 判断是否登陆，返回以登陆的用户信息
      */
     gen('post', '/user/login/is', async (req, res) => {
-        res.json(Params.success(req.session.user.info()));
+        const u = req.session.user;
+        const re = u ? {userid: u.userid, username: u.username} : null;
+        res.json(Params.success(re));
     }),
     /**
      * 注销

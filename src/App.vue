@@ -32,6 +32,13 @@ export default {
                 this.main_style.height = (window.innerHeight - marginTop * 2) + 'px';
                 this.main_style.width = '800px';
             }
+        },
+        onIsLogin: function () {
+            var self = this;
+            axios.post(R.URL.ISLOGIN_URL).then(function (obj) {
+                if (obj.data.code !== 0) util.dialog.error(R.Str.ERROR_NETWORK);
+                if (obj.data.obj == null) self.$router.push('login');
+            })
         }
     },
     computed: {
@@ -40,6 +47,7 @@ export default {
         }
     },
     mounted: function () {
+        this.onIsLogin();
         window.app = this;
         window.onresize = this.onResize;
         window.onresize();

@@ -9,6 +9,8 @@ window.R = {
 
   },
   URL: {
+    // 是否登陆url
+    ISLOGIN_URL: 'user/login/is',
     // 注册url
     REQIST_URL: 'user/sign/up',
     // 登陆url

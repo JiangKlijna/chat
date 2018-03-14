@@ -27,7 +27,7 @@ const userService = {
         let u = new User({username, password, add_time:new Date()});
         u.save(function (err) {
             if(err) reject(err);
-            else resolve(u);
+            else resolve({username, userid: u.userid});
         })
     }),
     /**

@@ -65,9 +65,11 @@ export default {
     methods: {
         onClickRegist: function () {
             if (!util.test_params(this.username, this.password)) return;
+            var self = this;
             axios.post(R.URL.REQIST_URL, {username: this.username, password: this.password}).then(function (obj) {
-                if (obj.data.code !== 0) util.dialog.error(R.Str.ERROR_NETWORK);
-                console.log(obj.data);
+                if (obj.data.code !== 0) return util.dialog.error(R.Str.ERROR_NETWORK);
+                var u = obj.data.obj;
+                util.dialog.base("User ID : " + u.userid, "注册成功", self.onClickLogin, '确定');
             })
         },
         onClickLogin: function () {

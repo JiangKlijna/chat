@@ -35,9 +35,15 @@ window.util = {
          return true;
     },
     dialog: {
-        error: function (content) {
+        base: function (content, title, handle, confirmText) {
             location.hash += '#';
-            mdui.alert(content, R.Str.ERROR, null, {confirmText: '确 定'});
+            mdui.alert(content, title, handle, {confirmText: confirmText});
+        },
+        error: function (content) {
+            this.base(content, R.Str.ERROR, null, '确 定');
+        },
+        info: function (content) {
+            this.base(content, R.Str.INFO, null, '确 定');
         }
     }
 };

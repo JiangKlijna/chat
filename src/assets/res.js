@@ -5,6 +5,7 @@ window.R = {
   primary_colors: ["amber", "blue", "blue-grey", "brown", "cyan", "deep-orange", "deep-purple", "green", "grey", "indigo", "light-blue", "light-green", "lime", "orange", "pink", "purple", "red", "teal", "yellow"],
   Str: {
     ERROR: "错误",
+    INFO: "信息",
     ERROR_NETWORK: "服务器维护或网络错误",
 
   },

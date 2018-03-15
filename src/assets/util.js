@@ -45,5 +45,17 @@ window.util = {
         info: function (content) {
             this.base(content, R.Str.INFO, null, '确 定');
         }
+    },
+    RouterListen: {
+        mListen: null,
+        pListen: null,
+        regist: function ($router) {
+            if (this.pListen) return;
+            var self = this;
+            self.pListen = function (to, from, next) {
+                if (self.mListen) self.mListen(to, from, next)
+            };
+            $router.beforeEnter(self.pListen);
+        }
     }
 };

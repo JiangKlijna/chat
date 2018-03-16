@@ -9,7 +9,7 @@ window.util = {
         if (str.indexOf('-') >= 0) {
             var arr = str.split('-');
             for (var i in arr) {
-                arr[i] = window.util.toUpperTitle(arr[i]) + ' ';
+                arr[i] = this.toUpperTitle(arr[i]) + ' ';
             }
             return arr.join('');
         } else {
@@ -49,13 +49,14 @@ window.util = {
     RouterListen: {
         mListen: null,
         pListen: null,
-        regist: function ($router) {
+        regist: function ($router, cb) {
+            this.mListen = cb;
             if (this.pListen) return;
             var self = this;
             self.pListen = function (to, from, next) {
                 if (self.mListen) self.mListen(to, from, next)
             };
-            $router.beforeEnter(self.pListen);
+            $router.beforeEach(self.pListen);
         }
     }
 };

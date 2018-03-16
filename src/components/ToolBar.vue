@@ -18,6 +18,7 @@ export default {
         return {
             //title: '消息',
             isRoot: this.$router.currentRoute.path === '/',
+            prePath: this.$router.currentRoute.path,
         }
     },
     methods: {
@@ -36,13 +37,14 @@ export default {
         },
         onBeforeEach: function (to, from, next) {
             this.isRoot = to.path == '/';
+            this.prePath = from.path;
             next();
         }
     },
     mounted: function () {
         window.menu = this;
-        this.$router.beforeEach(this.onBeforeEach);
-    }
+        util.RouterListen.regist(this.$router, this.onBeforeEach);
+    },
 }
 </script>
 

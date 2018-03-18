@@ -22,6 +22,13 @@ export default {
         }
     },
     methods: {
+        go: function (path) {
+            if (prePath === path) {
+                this.$router.back();
+            } else {
+                this.$router.push(path);
+            }
+        },
         onBack: function () {
             var hash = location.hash, n = 1, i;
             for (i = hash.length-1; i >= 0; i--) {
@@ -33,7 +40,8 @@ export default {
             }
         },
         onClickIcon: function (path) {
-            this.$router.push(path);
+            // this.$router.push(path);
+            this.go(path);
         },
         onBeforeEach: function (to, from, next) {
             this.isRoot = to.path == '/';

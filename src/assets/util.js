@@ -46,14 +46,18 @@ window.util = {
             this.base(content, R.Str.INFO, null, '确 定');
         }
     },
-    RouterListen: {
+    Router: {
         mListen: null,
         pListen: null,
+        prePath: '/',
+        curPath: '',
         regist: function ($router, cb) {
             this.mListen = cb;
             if (this.pListen) return;
             var self = this;
             self.pListen = function (to, from, next) {
+                self.curPath = to.path;
+                self.prePath = from.path;
                 if (self.mListen) self.mListen(to, from, next)
             };
             $router.beforeEach(self.pListen);

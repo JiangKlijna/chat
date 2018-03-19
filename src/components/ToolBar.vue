@@ -18,17 +18,9 @@ export default {
         return {
             //title: '消息',
             isRoot: this.$router.currentRoute.path === '/',
-            prePath: this.$router.currentRoute.path,
         }
     },
     methods: {
-        go: function (path) {
-            if (prePath === path) {
-                this.$router.back();
-            } else {
-                this.$router.push(path);
-            }
-        },
         onBack: function () {
             var hash = location.hash, n = 1, i;
             for (i = hash.length-1; i >= 0; i--) {
@@ -40,18 +32,16 @@ export default {
             }
         },
         onClickIcon: function (path) {
-            // this.$router.push(path);
-            this.go(path);
+            this.$router.push(path);
         },
         onBeforeEach: function (to, from, next) {
             this.isRoot = to.path == '/';
-            this.prePath = from.path;
             next();
         }
     },
     mounted: function () {
         window.menu = this;
-        util.RouterListen.regist(this.$router, this.onBeforeEach);
+        util.Router.regist(this.$router, this.onBeforeEach);
     },
 }
 </script>

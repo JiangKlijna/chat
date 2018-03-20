@@ -11,6 +11,7 @@ export default {
     name: 'app',
     data: function () {
         return {
+            user: null,
             accent_color: null,
             primary_color: null,
             main_style: {
@@ -38,6 +39,7 @@ export default {
             axios.post(R.URL.ISLOGIN_URL).then(function (obj) {
                 if (obj.data.code !== 0) util.dialog.error(R.Str.ERROR_NETWORK);
                 if (obj.data.obj == null) self.$router.push('login');
+                else self.user = obj.data.obj;
             })
         }
     },

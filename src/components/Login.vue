@@ -80,6 +80,10 @@ export default {
         onClickRegist() {
             this.$router.push('regist');
         }
+    },
+    mounted: function () {
+        // 已经登陆则返回
+        if (app.user !== null) this.$router.back();
     }
 }
 </script>

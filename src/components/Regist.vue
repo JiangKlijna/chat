@@ -75,6 +75,10 @@ export default {
         onClickLogin: function () {
             this.$router.push('login');
         }
+    },
+    mounted: function () {
+        // 已经登陆则返回
+        if (app.user !== null) this.$router.back();
     }
 }
 </script>

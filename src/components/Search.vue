@@ -69,6 +69,10 @@ export default {
             // search by userid
             if(!isNaN(n)) this.search({userid: n});
         }
+    },
+    mounted: function () {
+        // 如果未登陆则跳转到login
+        if (app.user === null) this.$router.push('/login');
     }
 }
 </script>

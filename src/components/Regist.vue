@@ -69,7 +69,7 @@ export default {
             axios.post(R.URL.REQIST_URL, {username: this.username, password: this.password}).then(function (obj) {
                 if (obj.data.code !== 0) return util.dialog.error(R.Str.ERROR_NETWORK);
                 var u = obj.data.obj;
-                util.dialog.base("User ID : " + u.userid, "注册成功", self.onClickLogin, '确定');
+                util.dialog.base("User ID : " + u.userid, "注册成功", function () {this.$router.push('login');}, '确定');
             })
         },
         onClickLogin: function () {
@@ -78,7 +78,7 @@ export default {
     },
     mounted: function () {
         // 已经登陆则返回
-        if (app.user !== null) this.$router.back();
+        if (app.user !== null) location.hash = '/';
     }
 }
 </script>

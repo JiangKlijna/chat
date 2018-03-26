@@ -65,7 +65,7 @@ export default {
                 this.imgurl = null;
                 return;
             }
-            if (n[0] === o[0]) return;
+            // if (n[0] === o[0]) return;
             this.imgurl = util.mdAvatar(80, n);
         }
     },
@@ -74,7 +74,7 @@ export default {
             if (!util.test_params(this.userid, this.password)) return;
             axios.post(R.URL.LOGIN_URL, {userid: this.userid, password: this.password}).then(function (obj) {
                 if (obj.data.code !== 0) util.dialog.error(R.Str.ERROR_NETWORK);
-                console.log(obj.data);
+                location.hash = '/';
             })
         },
         onClickRegist() {
@@ -83,7 +83,7 @@ export default {
     },
     mounted: function () {
         // 已经登陆则返回
-        if (app.user !== null) this.$router.back();
+        if (app.user !== null) location.hash = '/';
     }
 }
 </script>

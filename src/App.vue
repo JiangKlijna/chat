@@ -41,6 +41,12 @@ export default {
                 if (obj.data.obj == null) self.$router.push('login');
                 else self.user = obj.data.obj;
             })
+        },
+        onLogout: function () {
+            axios.post(R.URL.LOGOUT_URL).then(function (obj) {
+                self.user = null;
+                self.$router.push('login');
+            })
         }
     },
     computed: {

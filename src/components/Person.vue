@@ -53,9 +53,17 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-    #person_show {
+    #person_body {
+        height: 50%;
+        min-height: 200px;
         width: 50%;
         margin: 0 auto;
+        position: relative;
+    }
+    #person_show {
+        width: 100%;
+        bottom: 0;
+        position: absolute;
     }
     .person_title {
         font-size: 22px;

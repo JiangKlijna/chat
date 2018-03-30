@@ -39,6 +39,7 @@ export default {
         },
         // 注销
         logout: function () {
+            app.onLogout();
         }
     },
     mounted: function () {

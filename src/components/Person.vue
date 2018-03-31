@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-model="http://www.w3.org/1999/xhtml">
     <div id="person">
         <ToolBar title="我的"/>
         <div id="person_body">
@@ -15,6 +15,21 @@
                     <i class="mdui-icon material-icons">all_out</i>
                 </button>
             </div>
+            <div id="person_input_dialog" class="mdui-dialog" ref="input_dialog">
+                <div class="mdui-dialog-title">{{dialog_title}}</div>
+                <div class="mdui-dialog-content">
+                    <div class="mdui-textfield mdui-textfield-floating-label">
+                        <i class="mdui-icon material-icons">{{dialog_icons}}</i>
+                        <label class="mdui-textfield-label">{{dialog_label}}</label>
+                        <input class="mdui-textfield-input" v-bind:type="dialog_type" v-model:value="dialog_value" required/>
+                        <div class="mdui-textfield-error">不能为空</div>
+                    </div>
+                </div>
+                <div class="mdui-dialog-actions">
+                    <button class="mdui-btn mdui-ripple" mdui-dialog-close>取消</button>
+                    <button class="mdui-btn mdui-ripple" mdui-dialog-confirm v-on:click="onChange()">修改</button>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -27,19 +42,39 @@ export default {
     data () {
         return {
             imgurl: null,
-            username: null
+            username: null,
+            dialog: null,
+            dialog_title: '',
+            dialog_icons: '',
+            dialog_label: '',
+            dialog_value: '',
+            dialog_type: '',
         }
     },
     methods: {
+        openDialog: function (title, icons, label, value, type) {
+            location.hash += '#';
+            this.dialog_title = title;
+            this.dialog_icons = icons;
+            this.dialog_label = label;
+            this.dialog_value = value;
+            this.dialog_type = type;
+            this.dialog.open();
+        },
         // 修改密码
         changePassword: function () {
+            this.openDialog('修改密码', 'vpn_key', '密码', '', 'password');
         },
         // 修改昵称
         changeUsername: function () {
+            this.openDialog('修改昵称', 'account_circle', '昵称', '', 'text');
         },
         // 注销
         logout: function () {
             app.onLogout();
+        },
+        // 当dialog确定时
+        onChange: function () {
         }
     },
     mounted: function () {
@@ -48,6 +83,7 @@ export default {
         if (app.user === null) this.$router.push('/login');
         this.username = app.user.username;
         this.imgurl = util.mdAvatar(80, this.username);
+        this.dialog = new mdui.Dialog(this.$refs.input_dialog);
     }
 }
 </script>
@@ -69,5 +105,8 @@ export default {
     .person_title {
         font-size: 22px;
         font-weight: 700;
+    }
+    #person_input_dialog {
+        text-align: left;
     }
 </style>

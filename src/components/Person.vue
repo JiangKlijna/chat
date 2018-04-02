@@ -79,8 +79,8 @@ export default {
     },
     mounted: function () {
         // 如果未登陆则跳转到login
-        app.user = {username:'test'}
-        if (app.user === null) this.$router.push('/login');
+        // app.user = {username:'test'}
+        if (app.user === null) return this.$router.push('/login');
         this.username = app.user.username;
         this.imgurl = util.mdAvatar(80, this.username);
         this.dialog = new mdui.Dialog(this.$refs.input_dialog);

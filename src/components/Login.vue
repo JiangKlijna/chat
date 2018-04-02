@@ -72,9 +72,12 @@ export default {
     methods: {
         onClickLogin() {
             if (!util.test_params(this.userid, this.password)) return;
+            var self = this;
             axios.post(R.URL.LOGIN_URL, {userid: this.userid, password: this.password}).then(function (obj) {
-                if (obj.data.code !== 0) util.dialog.error(R.Str.ERROR_NETWORK);
-                location.hash = '/';
+                if (obj.data.code !== 0) return util.dialog.error(R.Str.ERROR_NETWORK);
+                if (!obj.data.obj) return util.dialog.error(R.Str.ERROR);
+                app.user = obj.data.obj;
+                self.$router.push('person');
             })
         },
         onClickRegist() {
@@ -83,7 +86,7 @@ export default {
     },
     mounted: function () {
         // 已经登陆则返回
-        if (app.user !== null) location.hash = '/';
+        if (app.user !== null) this.$router.push('person');
     }
 }
 </script>

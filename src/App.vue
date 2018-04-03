@@ -43,6 +43,7 @@ export default {
             })
         },
         onLogout: function () {
+            var self = this;
             axios.post(R.URL.LOGOUT_URL).then(function (obj) {
                 self.user = null;
                 self.$router.push('login');

@@ -62,5 +62,26 @@ window.util = {
             };
             $router.beforeEach(self.pListen);
         }
-    }
+    },
+    Socket: new (function() {
+        var skt = null;
+        var TAG = "message";
+        this.open = function () {
+            if (skt) return;
+            skt = io();
+            skt.on(TAG, function (msg) {
+                console.log(msg);
+                skt.emit(TAG, msg);
+            })
+        };
+        this.close = function () {
+            if (!skt) return;
+            skt.close();
+            skt = null;
+        };
+        this.commit = function (msg) {
+            if (!skt) return;
+            skt.emit(TAG, msg);
+        };
+    })()
 };

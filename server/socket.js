@@ -1,13 +1,18 @@
 
 // socket.io
+let sktio = require('socket.io');
+let io = null;
 
-let message = function (obj) {
+const TAG = "message";
 
+let message = function (msg) {
+    console.log(msg);
+    io.emit(TAG, msg);
 }
 
 module.exports = function (server) {
-    let io = require('socket.io')(server);
+    io = sktio(server);
     io.on('connection', function (socket) {
-        socket.on(message.name, message)
+        socket.on(TAG, message)
     })
 }

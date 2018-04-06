@@ -47,10 +47,17 @@ UserSchema.pre('save', function(next) {
     });
 });
 
+// Chat Message
+let MessageSchema = new mongoose.Schema({
+    toUserid: Number,
+    fromUserid: Number,
+    time: Date,
+    content: String
+});
+
 let User = mongoose.model('User', UserSchema);
-module.exports = {
-    User: User,
-};
+let Message = mongoose.model('User', MessageSchema);
+module.exports = {User, Message};
 
 // test
 if(module === require.main) {

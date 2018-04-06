@@ -1,7 +1,7 @@
 // service
 // mongo Schema methods
 
-let {User} = require('./mongo');
+let {User, Message} = require('./mongo');
 
 // user service
 const userService = {

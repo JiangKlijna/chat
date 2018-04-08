@@ -50,6 +50,15 @@ export default {
             })
         }
     },
+    watch: {
+        user: function (u) {
+            if (u) { // 登陆之后获得当前用户数据 触发
+                util.Socket.open(u.userid);
+            } else { // 注销之后去除当前用户数据 触发
+                util.Socket.close();
+            }
+        }
+    },
     computed: {
         app_class: function () {
             return 'mdui-theme-primary-' + this.primary_color + ' mdui-theme-accent-' + this.accent_color;

@@ -65,13 +65,12 @@ window.util = {
     },
     Socket: new (function() {
         var skt = null;
-        var TAG = "message";
-        this.open = function () {
+        var cb = null;
+        this.open = function (userid) {
             if (skt) return;
             skt = io();
-            skt.on(TAG, function (msg) {
-                console.log(msg);
-                skt.emit(TAG, msg);
+            skt.on(userid, function (msg) {
+                if (cb) cb(msg);
             })
         };
         this.close = function () {
@@ -79,9 +78,12 @@ window.util = {
             skt.close();
             skt = null;
         };
-        this.commit = function (msg) {
+        this.commit = function (toUserid, msg) {
             if (!skt) return;
-            skt.emit(TAG, msg);
+            skt.emit(toUserid, msg);
         };
+        this.add = function (callback) {
+            cb = callback;
+        }
     })()
 };

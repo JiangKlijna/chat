@@ -56,7 +56,7 @@ let MessageSchema = new mongoose.Schema({
 });
 
 let User = mongoose.model('User', UserSchema);
-let Message = mongoose.model('User', MessageSchema);
+let Message = mongoose.model('Message', MessageSchema);
 module.exports = {User, Message};
 
 // test

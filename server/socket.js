@@ -6,13 +6,7 @@ let skt = null;
 
 const TAG = "message";
 
-// 收到从fromUser到toUser的信息
-// 先把数据保存到数据库，再把消息发出去
-let message = function (msg) {
-    console.log(msg);
-    io.emit(TAG, msg);
-}
-
+// 初始化模块
 let init = function (server) {
     io = sktio(server);
     io.on('connection', function (socket) {
@@ -21,7 +15,15 @@ let init = function (server) {
         console.log(skt);
     })
 };
-// tag为userid
+
+// 收到从fromUser到toUser的信息
+// 先把数据保存到数据库，再把消息发出去
+let message = function (msg) {
+  console.log(msg);
+  io.emit(TAG, msg);
+};
+
+// 监听此用户的频道，并且不关闭
 let on = (userid) => skt.on(userid, message);
 
 module.exports = {init, on};

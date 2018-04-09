@@ -78,9 +78,9 @@ window.util = {
             skt.close();
             skt = null;
         };
-        this.commit = function (toUserid, msg) {
+        this.commit = function (toUserid, message) {
             if (!skt) return;
-            skt.emit(toUserid, msg);
+            skt.emit(toUserid, {toUserid: toUserid, message: message});
         };
         this.add = function (callback) {
             cb = callback;

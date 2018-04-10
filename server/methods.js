@@ -4,7 +4,7 @@
 let {User, Message} = require('./mongo');
 
 // user service
-const userService = {
+const UserService = {
     /**
      * 验证用户密码
      * @param userid
@@ -52,18 +52,24 @@ const userService = {
             else resolve(u);
         });
     }),
-}
+};
+
+// chat service
+const ChatService = {
+
+};
 
 module.exports = {
-    us: userService
+    us: UserService,
+    cs: ChatService,
 };
 
 // test
 if(module === require.main) {
     (async () => {
-        let u = await userService.verification('1', 'update');
+        let u = await UserService.verification('1', 'update');
         console.log("await", u)
-        let r = await userService.update(1, {username: 'update'});
+        let r = await UserService.update(1, {username: 'update'});
         console.log("await", r)
     })()
 }

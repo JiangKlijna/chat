@@ -117,15 +117,19 @@ const routes = [
         }
     }),
     // 获得消息列表
-    gen('post', '/message/list', function (req, res) {
+    gen('post', '/chat/list', function (req, res) {
         res.send('list')
     }),
     // 删除一个会话的所有消息
-    gen('post', '/message/delete', function (req, res) {
+    gen('post', '/chat/delete', function (req, res) {
         res.send('delete')
+    }),
+    // 获得一个会话的历史消息， 分页
+    gen('post', '/chat/history', function (req, res) {
+        res.send('history')
     }),
 ]
 
 module.exports = app => {
-  for (let r of routes) r.setting(app)
+    for (let r of routes) r.setting(app)
 };

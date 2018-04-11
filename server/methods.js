@@ -44,7 +44,7 @@ const UserService = {
     /**
      * 修改用户信息
      * @param userobj
-     * @returns {Promise<any>}
+     * @returns {Promise<User>}
      */
     update: (userid, userobj) => new Promise((resolve, reject) => {
         User.update({userid}, userobj, (err, u) => {
@@ -56,7 +56,20 @@ const UserService = {
 
 // chat service
 const ChatService = {
-
+    /**
+     * 记录一条聊天信息
+     * @param fromUserid
+     * @param toUserid
+     * @param content
+     * @returns {Promise<Message>}
+     */
+    record: (fromUserid, toUserid, content) => new Promise((resolve, reject) => {
+        let m = new Message({fromUserid, toUserid, content, time:new Date()});
+        u.save(function (err) {
+            if(err) reject(err);
+            else resolve(m);
+        })
+    }),
 };
 
 module.exports = {

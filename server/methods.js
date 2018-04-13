@@ -79,19 +79,31 @@ const ChatService = {
     list: (userid) => new Promise(async (resolve, reject) => {
         try {
             let map = new Map();
-            let list1 = await Message.aggregate().match({toUserid: userid}).sort({'_id': -1}).group({
+            let list1 = await Message.aggregate().match({toUserid: userid}).sort({'_id': -1}).lookup({
+                from: 'users',
+                localField: 'fromUserid',
+                foreignField: 'userid',
+                as: 'u'
+            }).group({
                 _id: {fromUserid: "$fromUserid"},
                 toUserid: {$push: "$toUserid"},
                 fromUserid: {$push: "$fromUserid"},
                 time: {$push: "$time"},
-                content: {$push: "$content"}
+                content: {$push: "$content"},
+                username: {$push: "$u.username"}
             }).exec();
-            let list2 = await Message.aggregate().match({fromUserid: userid}).sort({'_id': -1}).group({
+            let list2 = await Message.aggregate().match({fromUserid: userid}).sort({'_id': -1}).lookup({
+                from: 'users',
+                localField: 'toUserid',
+                foreignField: 'userid',
+                as: 'u'
+            }).group({
                 _id: {toUserid: "$toUserid"},
                 toUserid: {$push: "$toUserid"},
                 fromUserid: {$push: "$fromUserid"},
                 time: {$push: "$time"},
-                content: {$push: "$content"}
+                content: {$push: "$content"},
+                username: {$push: "$u.username"}
             }).exec();
             let each = e => {
                 delete e._id;
@@ -99,6 +111,7 @@ const ChatService = {
                 e.toUserid = e.toUserid[0];
                 e.time = e.time[0].getTime();
                 e.content = e.content[0];
+                e.username = e.username[0][0];
                 // 遍历过程中
                 let tagUserid = (e.fromUserid === userid) ? e.toUserid : e.fromUserid;
                 if (map.hasOwnProperty(tagUserid)) { // 已存在
@@ -134,8 +147,8 @@ if(module === require.main) {
             let r = await UserService.update(1, {username: 'test', password: 'test'});
             console.log("update", r);
 
-            let m = await ChatService.record(8, 6, "test");
-            console.log("record", m);
+            // let m = await ChatService.record(8, 6, "test");
+            // console.log("record", m);
             let l = await ChatService.list(8);
             console.log("list", l);
         }catch (e) {

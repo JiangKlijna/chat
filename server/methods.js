@@ -126,6 +126,7 @@ const ChatService = {
             list2.forEach(each);
             let result = [];
             for (let v in map) result.push(map[v]);
+            result.sort((a, b) => b.time - a.time);
             resolve(result);
         } catch (err) {
             reject(err);

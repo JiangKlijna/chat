@@ -1,7 +1,7 @@
 // control
 // restful api
 
-const {us} = require("./methods.js")
+const {us, cs} = require("./methods.js")
 
 // generator function
 const gen = (method, path, fun) => {
@@ -117,8 +117,14 @@ const routes = [
         }
     }),
     // 获得消息列表
-    gen('post', '/chat/list', function (req, res) {
-        res.send('list')
+    gen('post', '/chat/list', async function (req, res) {
+        if (!req.session.user) return res.json(Params.illegal);
+        try {
+            let list = await cs.list(req.session.user.userid);
+            res.json(Params.success(list));
+        } catch (e) {
+            res.json(Params.failure(e));
+        }
     }),
     // 删除一个会话的所有消息
     gen('post', '/chat/delete', function (req, res) {

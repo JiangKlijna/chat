@@ -127,14 +127,23 @@ const routes = [
         }
     }),
     // 删除一个会话的所有消息
-    gen('post', '/chat/delete', function (req, res) {
-        res.send('delete')
+    gen('post', '/chat/delete', async function (req, res) {
+        if (!req.session.user) return res.json(Params.illegal);
+
+        let userid = Params.get(req, 'userid');
+        if (!Params.test(userid)) return res.json(Params.illegal);
+        try {
+            let re = await cs.delete(req.session.user.userid, userid);
+            res.json(Params.success(re));
+        } catch (e) {
+            res.json(Params.failure(e));
+        }
     }),
     // 获得一个会话的历史消息， 分页
     gen('post', '/chat/history', function (req, res) {
         res.send('history')
     }),
-]
+];
 
 module.exports = app => {
     for (let r of routes) r.setting(app)

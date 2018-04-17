@@ -131,7 +131,20 @@ const ChatService = {
         } catch (err) {
             reject(err);
         }
-    })
+    }),
+    /**
+     * 删除两个人之间的聊天记录
+     * @returns {Promise<Boolean>}
+     */
+    delete: (userid0, userid1) => new Promise(async (resolve, reject) => {
+        Message.find({$or: [
+            {toUserid: userid0, fromUserid: userid1},
+            {toUserid: userid1, fromUserid: userid0}
+        ]}).remove(function (err) {
+            if(err) reject(err);
+            else resolve(true);
+        });
+    }),
 };
 
 module.exports = {
@@ -148,10 +161,12 @@ if(module === require.main) {
             let r = await UserService.update(1, {username: 'test', password: 'test'});
             console.log("update", r);
 
-            // let m = await ChatService.record(8, 6, "test");
-            // console.log("record", m);
+            let m = await ChatService.record(6, 8, "test");
+            console.log("record", m);
             let l = await ChatService.list(8);
             console.log("list", l);
+            let d = await ChatService.delete(6, 8);
+            console.log("delete", d);
         }catch (e) {
             console.log(e)
         }

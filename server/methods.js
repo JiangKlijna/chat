@@ -145,6 +145,27 @@ const ChatService = {
             else resolve(true);
         });
     }),
+    /**
+     * 获得两个人的聊天记录(分页)
+     * pageSize默认为10
+     * pageNum从0开始
+     * @returns {Promise<List<Message>>}
+     */
+    history: (userid0, userid1, pageNum, pageSize) => new Promise((resolve, reject) => {
+        Message.find({$or: [
+            {toUserid: userid0, fromUserid: userid1},
+            {toUserid: userid1, fromUserid: userid0}
+        ]}).sort({'_id': -1}).skip(pageNum*pageSize).limit(pageSize).exec(function (err, list) {
+            if(err) reject(err);
+            else
+                resolve(list.map(it => ({
+                    fromUserid: it.fromUserid,
+                    toUserid: it.toUserid,
+                    time: it.time.getTime(),
+                    content: it.content
+                })));
+        });
+    })
 };
 
 module.exports = {
@@ -167,6 +188,8 @@ if(module === require.main) {
             console.log("list", l);
             let d = await ChatService.delete(6, 8);
             console.log("delete", d);
+            let h = await ChatService.history(1, 8, 0, 10);
+            console.log("history", h);
         }catch (e) {
             console.log(e)
         }

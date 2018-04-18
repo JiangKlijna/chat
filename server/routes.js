@@ -140,8 +140,18 @@ const routes = [
         }
     }),
     // 获得一个会话的历史消息， 分页
-    gen('post', '/chat/history', function (req, res) {
-        res.send('history')
+    gen('post', '/chat/history', async function (req, res) {
+        if (!req.session.user) return res.json(Params.illegal);
+
+        let userid = Params.get(req, 'userid');
+        let pageNum = Params.get(req, 'pageNum');
+        if (!Params.test(userid, pageNum)) return res.json(Params.illegal);
+        try {
+            let list = await cs.history(req.session.user.userid, userid, pageNum, 10);
+            res.json(Params.success(list));
+        } catch (e) {
+            res.json(Params.failure(e));
+        }
     }),
 ];
 

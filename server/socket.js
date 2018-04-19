@@ -1,29 +1,20 @@
 
 // socket.io
-let sktio = require('socket.io');
 let io = null;
-let skt = null;
-
-const TAG = "message";
-
-// 初始化模块
-let init = function (server) {
-    io = sktio(server);
-    io.on('connection', function (socket) {
-        skt = socket;
-        socket.on(TAG, message);
-        console.log(skt);
-    })
-};
 
 // 收到从fromUser到toUser的信息
 // 先把数据保存到数据库，再把消息发出去
 let message = function (msg) {
-  console.log(msg);
-  io.emit(TAG, msg);
+    io.emit(msg.toUserid, msg.message);
 };
 
-// 监听此用户的频道，并且不关闭
-let on = (userid) => skt.on(userid, message);
+//拿到socket对象, 并监听所有用户的频道,而且不关闭
+let init = function (skt) {
+    skt.on(userid, message);
+};
 
-module.exports = {init, on};
+// 初始化模块
+module.exports = server => {
+    io = require('socket.io')(server);
+    io.on('connection', init);
+};

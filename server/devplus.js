@@ -103,7 +103,7 @@ devMiddleware.waitUntilValid(() => {
     require('./routes.js')(app)
     server = app.listen(port)
     // set socket.io
-    require('./socket.js').init(server)
+    require('./socket.js')(server)
     _resolve()
   })
 })

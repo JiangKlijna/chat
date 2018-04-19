@@ -25,4 +25,4 @@ require('opn')(uri)
 let server = app.listen(config.port)
 
 // set socket.io
-require('./socket.js').init(server)
+require('./socket.js')(server)

@@ -52,6 +52,16 @@ const UserService = {
             else resolve(u);
         });
     }),
+    /**
+     * 获得用户数，通过最大的userid
+     * @returns {Promise<Number>}
+     */
+    getMaxId: () => new Promise((resolve, reject) => {
+        User.find().sort({'_id': -1}).limit(1).exec((err, u) => {
+            if(err) reject(err);
+            else resolve(u[0].userid);
+        })
+    })
 };
 
 // chat service
@@ -190,6 +200,8 @@ if(module === require.main) {
             console.log("delete", d);
             let h = await ChatService.history(1, 8, 0, 10);
             console.log("history", h);
+            let g = await UserService.getMaxId();
+            console.log("getMaxId", g)
         }catch (e) {
             console.log(e)
         }

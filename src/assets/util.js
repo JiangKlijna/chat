@@ -66,21 +66,25 @@ window.util = {
     Socket: new (function() {
         var skt = null;
         var cb = null;
+        var fromUserid = null;
+        var TAG = "message";
         this.open = function (userid) {
             if (skt) return;
             skt = io();
             skt.on(userid, function (msg) {
                 if (cb) cb(msg);
-            })
+            });
+            fromUserid = userid;
         };
         this.close = function () {
             if (!skt) return;
             skt.close();
             skt = null;
+            fromUserid = null;
         };
         this.commit = function (toUserid, message) {
             if (!skt) return;
-            skt.emit(toUserid, {toUserid: toUserid, message: message});
+            skt.emit(TAG, {fromUserid: fromUserid, toUserid: toUserid, message: message});
         };
         this.add = function (callback) {
             cb = callback;

@@ -20,5 +20,12 @@ window.R = {
     LOGIN_URL: 'user/sign/in',
     // 搜索url
     SEARCH_URL: 'user/search',
+    // 聊天列表
+    CHAT_LIST_URL: 'chart/list',
+    // 删除两个人的聊天列表
+    CHAT_DEL_URL: 'chart/delete',
+    // 聊天历史记录列表
+    CHAT_HISTORY_URL: 'chart/history',
+
   }
 };

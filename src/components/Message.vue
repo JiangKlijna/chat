@@ -13,12 +13,23 @@ export default {
     components: {ToolBar},
     data () {
         return {
-
+            list: [],
         }
+    },
+    methods: {
+        // 获得聊天列表
+        onInit: function () {
+            var self = this;
+            axios.post(R.URL.CHAT_LIST_URL).then(function (obj) {
+                if (obj.data.code !== 0) util.dialog.error(R.Str.ERROR_NETWORK);
+                self.list = obj.data.obj;
+            })
+        },
     },
     mounted: function () {
         // 如果未登陆则跳转到login
-        if (app.user === null) this.$router.push('/login');
+        if (app.user === null) return this.$router.push('/login');
+        this.onInit();
     }
 }
 </script>

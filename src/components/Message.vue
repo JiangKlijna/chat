@@ -9,6 +9,7 @@
                         <div class="mdui-list-item-title">{{m.username}}</div>
                         <div class="mdui-list-item-text mdui-list-item-one-line">{{m.content}}</div>
                     </div>
+                  <div class="message_date">{{toChatTime(m.time)}}</div>
                 </li>
             </ul>
         </div>
@@ -29,6 +30,9 @@ export default {
         toAvatarUrl: function (text) {
             return util.mdAvatar(60, text);
         },
+        toChatTime: function (time) {
+            return util.toChatTime(time);
+        },
         // 获得聊天列表
         onInit: function () {
             var self = this;
@@ -48,5 +52,18 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+    #message_body li {
+        border-bottom: 1px solid #aaa;
+        padding: 0 10px;
+    }
+    #message_body .mdui-list-item-title {
+        font-weight: 700;
+    }
+    #message_body .mdui-list-item-text {
+        color: #666;
+    }
+    #message_body .message_date {
+        float: right;
+        color: #666;
+    }
 </style>

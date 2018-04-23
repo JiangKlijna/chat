@@ -16,6 +16,10 @@ window.util = {
             return str.substring(0, 1).toUpperCase() + str.substring(1);
         }
     },
+    toChatTime: function (time) {
+        var now = new Date();
+        var chat = new Date(time);
+    },
     mdAvatar: function (size, text) {
         var url = Avatar_Cache[text[0]];
         if (url) return url;

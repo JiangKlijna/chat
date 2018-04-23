@@ -19,6 +19,10 @@ window.util = {
     toChatTime: function (time) {
         var now = new Date();
         var chat = new Date(time);
+        if (now.getFullYear() !== chat.getFullYear()) return chat.getFullYear();
+        if (now.getMonth() !== chat.getMonth()) return chat.getMonth() + 1 + "-" + chat.getDate();
+        if (now.getDate() !== chat.getDate()) return chat.getMonth() + 1 + "-" + chat.getDate();
+        return chat.getHours() + ":" + chat.getMinutes();
     },
     mdAvatar: function (size, text) {
         var url = Avatar_Cache[text[0]];

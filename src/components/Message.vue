@@ -2,6 +2,15 @@
     <div id="message">
         <ToolBar title="消息"/>
         <div id="message_body">
+            <ul class="mdui-list">
+                <li class="mdui-list-item mdui-ripple" v-for="m in list">
+                    <div class="mdui-list-item-avatar"><img v-bind:src="toAvatarUrl(m.username)"/></div>
+                    <div class="mdui-list-item-content">
+                        <div class="mdui-list-item-title">{{m.username}}</div>
+                        <div class="mdui-list-item-text mdui-list-item-one-line">{{m.content}}</div>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
 </template>
@@ -17,6 +26,9 @@ export default {
         }
     },
     methods: {
+        toAvatarUrl: function (text) {
+            return util.mdAvatar(60, text);
+        },
         // 获得聊天列表
         onInit: function () {
             var self = this;

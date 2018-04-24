@@ -46,7 +46,7 @@ export default {
             return util.mdAvatar(60, text);
         },
         onClickUser: function (u) {
-            this.$router.push('/chat?userid=' + u.userid);
+            this.$router.push('/chat/' + u.userid);
         },
         search: function (sobj) {
             var self = this;

@@ -18,6 +18,6 @@ export default new Router({
         {path: '/regist', name: 'Regist', component: Regist},
         {path: '/person', name: 'Person', component: Person},
         {path: '/search', name: 'Search', component: Search},
-        {path: '/chat', name: 'Search', component: Chat},
+        {path: '/chat/:userid', name: 'Chat', component: Chat},
     ]
 })

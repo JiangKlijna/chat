@@ -3,7 +3,7 @@
         <ToolBar title="消息"/>
         <div id="message_body">
             <ul class="mdui-list">
-                <li class="mdui-list-item mdui-ripple" v-for="m in list">
+                <li class="mdui-list-item mdui-ripple" v-for="m in list" v-on:click="onClickUser(m)">
                     <div class="mdui-list-item-avatar"><img v-bind:src="toAvatarUrl(m.username)"/></div>
                     <div class="mdui-list-item-content">
                         <div class="mdui-list-item-title">{{m.username}}</div>
@@ -27,6 +27,10 @@ export default {
         }
     },
     methods: {
+        onClickUser: function (m) {
+            var userid = m.fromUserid === app.user.userid ? m.toUserid : m.fromUserid;
+            this.$router.push('/chat/' + userid);
+        },
         toAvatarUrl: function (text) {
             return util.mdAvatar(60, text);
         },

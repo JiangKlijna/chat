@@ -27,8 +27,11 @@ export default {
         }
     },
     methods: {
+        getTagName: function (m) {
+            return m.fromUserid === app.user.userid ? m.toUserid : m.fromUserid;
+        },
         onClickUser: function (m) {
-            var userid = m.fromUserid === app.user.userid ? m.toUserid : m.fromUserid;
+            var userid = this.getTagName(m);
             this.$router.push('/chat/' + userid);
         },
         toAvatarUrl: function (text) {
@@ -43,13 +46,27 @@ export default {
             axios.post(R.URL.CHAT_LIST_URL).then(function (obj) {
                 if (obj.data.code !== 0) util.dialog.error(R.Str.ERROR_NETWORK);
                 self.list = obj.data.obj;
-            })
+            });
         },
+        // 当获得消息时
+        onMessage: function (m) {
+            var tn = this.getTagName(m);
+            for (var i in this.list) {
+                if (tn === this.getTagName(this.list[i])) {
+                    this.list[i] = m;
+                    return;
+                }
+            }
+        }
     },
     mounted: function () {
         // 如果未登陆则跳转到login
         if (app.user === null) return this.$router.push('/login');
         this.onInit();
+        uril.Socket.add(this.onMessage);
+    },
+    beforeDestroy: function () {
+        uril.Socket.add(null);
     }
 }
 </script>

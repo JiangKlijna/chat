@@ -52,8 +52,11 @@ export default {
         onMessage: function (m) {
             var tn = this.getTagName(m);
             for (var i in this.list) {
-                if (tn === this.getTagName(this.list[i])) {
-                    this.list[i] = m;
+                var list_i = this.list[i];
+                if (tn === this.getTagName(list_i)) {
+                    m.username = list_i.username;
+                    // this.list[i] = m;
+                    this.$set(this.list, i, m)
                     return;
                 }
             }
@@ -63,10 +66,10 @@ export default {
         // 如果未登陆则跳转到login
         if (app.user === null) return this.$router.push('/login');
         this.onInit();
-        uril.Socket.add(this.onMessage);
+        util.Socket.add(this.onMessage);
     },
     beforeDestroy: function () {
-        uril.Socket.add(null);
+        util.Socket.add(null);
     }
 }
 </script>

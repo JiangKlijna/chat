@@ -8,8 +8,8 @@ let io = null;
 // 先把数据保存到数据库，再把消息发出去
 let message = async msg => {
     try {
-        await cs.record(msg.fromUserid, msg.toUserid, msg.message);
-        io.emit(msg.toUserid, msg.message);
+        var m = await cs.record(msg.fromUserid, msg.toUserid, msg.message);
+        io.emit(msg.toUserid, m);
     } catch (e) {
         console.log(e);
     }

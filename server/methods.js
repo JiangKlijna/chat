@@ -74,10 +74,14 @@ const ChatService = {
      * @returns {Promise<Message>}
      */
     record: (fromUserid, toUserid, content) => new Promise((resolve, reject) => {
-        let m = new Message({fromUserid, toUserid, content, time:new Date()});
+        let data = {fromUserid, toUserid, content, time:new Date()};
+        let m = new Message(data);
         m.save(function (err) {
-            if(err) reject(err);
-            else resolve(m);
+            if (err) reject(err);
+            else  {
+                data.time = data.time.getTime();
+                resolve(data);
+            }
         })
     }),
     /**

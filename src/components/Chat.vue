@@ -54,6 +54,10 @@ export default {
                 if (obj.data.code !== 0) return util.dialog.error(R.Str.ERROR_NETWORK);
                 self.username = obj.data.obj[0].username
             })
+        },
+        // 当获得消息时
+        onMessage: function (m) {
+            this.list.unshift(m);
         }
     },
     mounted: function () {
@@ -61,6 +65,10 @@ export default {
         // 如果未登陆则跳转到login
         if (app.user === null) this.$router.push('/login');
         this.getTitleUsername(this.$route.params.userid);
+        util.Socket.add(this.onMessage);
+    },
+    beforeDestroy: function () {
+        util.Socket.add(null);
     }
 }
 </script>

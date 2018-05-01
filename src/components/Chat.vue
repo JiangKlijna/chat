@@ -29,6 +29,7 @@ export default {
         return {
             // 聊天列表
             list: [],
+            // 指代聊天的那个人
             username: null,
         }
     },
@@ -46,14 +47,20 @@ export default {
             return util.toChatTime(time);
         },
         onClickMore: function () {
+        },
+        getTitleUsername: function (userid) {
+            var self = this;
+            axios.post(R.URL.SEARCH_URL, {userid: userid}).then(function (obj) {
+                if (obj.data.code !== 0) return util.dialog.error(R.Str.ERROR_NETWORK);
+                self.username = obj.data.obj[0].username
+            })
         }
     },
     mounted: function () {
-        app.user = {userid:8,username:'skt'};
+        // app.user = {userid:8,username:'skt'};
         // 如果未登陆则跳转到login
         if (app.user === null) this.$router.push('/login');
-        this.username = app.user.username;
-        console.log(this.$route.params.userid)
+        this.getTitleUsername(this.$route.params.userid);
     }
 }
 </script>

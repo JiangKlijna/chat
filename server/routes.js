@@ -111,6 +111,7 @@ const routes = [
         if (!userobj) return res.json(Params.illegal);
         try {
             let re = await us.update(req.session.user.userid, userobj);
+            if (userobj.username) req.session.user.username = userobj.username;
             res.json(Params.success(re));
         } catch (e) {
             res.json(Params.failure(e));

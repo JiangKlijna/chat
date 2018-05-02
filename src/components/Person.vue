@@ -75,11 +75,17 @@ export default {
         },
         // 当dialog确定时
         onChange: function () {
+            var uobj = this.dialog_type === 'text' ? {username: this.dialog_value} : {password: this.dialog_value};
+            var self = this;
+            axios.post(R.URL.UPDATE_URL, uobj).then(function (obj) {
+                if (obj.data.code !== 0) return util.dialog.error(R.Str.ERROR_NETWORK);
+                if (self.dialog_type === 'text') self.username = self.dialog_value;
+                util.dialog.info("修改成功!");
+            });
         }
     },
     mounted: function () {
         // 如果未登陆则跳转到login
-        // app.user = {username:'test'}
         if (app.user === null) return this.$router.push('/login');
         this.username = app.user.username;
         this.imgurl = util.mdAvatar(80, this.username);

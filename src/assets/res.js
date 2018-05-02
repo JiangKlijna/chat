@@ -20,6 +20,8 @@ window.R = {
     LOGIN_URL: 'user/sign/in',
     // 搜索url
     SEARCH_URL: 'user/search',
+    // 更新url
+    UPDATE_URL: 'user/update',
     // 聊天列表
     CHAT_LIST_URL: 'chat/list',
     // 删除两个人的聊天列表

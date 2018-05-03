@@ -10,6 +10,7 @@ let message = async msg => {
     try {
         var m = await cs.record(msg.fromUserid, msg.toUserid, msg.message);
         io.emit(msg.toUserid, m);
+        io.emit(msg.fromUserid, m);
     } catch (e) {
         console.log(e);
     }

@@ -3,9 +3,9 @@
         <ToolBar v-bind:title="username"/>
         <div id="chat_body">
             <div class="mdui-textfield">
-                <input id="chat_text" class="mdui-textfield-input"/>
+                <input id="chat_text" class="mdui-textfield-input" v-model="msg" @keyup.enter="onSend"/>
             </div>
-            <button id="chat_btn" class="mdui-textfield-close mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">send</i></button>
+            <button id="chat_btn" class="mdui-textfield-close mdui-btn mdui-btn-icon" v-on:click="onSend"><i class="mdui-icon material-icons">send</i></button>
         </div>
         <div id="chat_list">
             <div v-for="m in list" v-bind:class="isSelf(m) ? 'chat_item_l' : 'chat_item_r'">
@@ -27,10 +27,16 @@ export default {
     components: {ToolBar},
     data () {
         return {
+            msg: '',
             // 聊天列表
             list: [],
             // 指代聊天的那个人
             username: null,
+        }
+    },
+    watch: {
+        msg: function (n, o) {
+            if (n.length > 36) this.msg = o;
         }
     },
     methods: {
@@ -58,12 +64,16 @@ export default {
         // 当获得消息时
         onMessage: function (m) {
             this.list.unshift(m);
+        },
+        // 发送消息
+        onSend: function () {
+            util.Socket.commit(this.$route.params.userid, this.msg);
+            this.msg = '';
         }
     },
     mounted: function () {
-        // app.user = {userid:8,username:'skt'};
         // 如果未登陆则跳转到login
-        if (app.user === null) this.$router.push('/login');
+        if (app.user === null) return this.$router.push('/login');
         this.getTitleUsername(this.$route.params.userid);
         util.Socket.add(this.onMessage);
     },

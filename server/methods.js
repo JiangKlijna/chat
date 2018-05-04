@@ -165,11 +165,11 @@ const ChatService = {
      * pageNum从0开始
      * @returns {Promise<List<Message>>}
      */
-    history: (userid0, userid1, pageNum, pageSize) => new Promise((resolve, reject) => {
+    history: (userid0, userid1, skipNum, pageSize) => new Promise((resolve, reject) => {
         Message.find({$or: [
             {toUserid: userid0, fromUserid: userid1},
             {toUserid: userid1, fromUserid: userid0}
-        ]}).sort({'_id': -1}).skip(pageNum*pageSize).limit(pageSize).exec(function (err, list) {
+        ]}).sort({'_id': -1}).skip(skipNum).limit(pageSize).exec(function (err, list) {
             if(err) reject(err);
             else
                 resolve(list.map(it => ({

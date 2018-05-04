@@ -145,10 +145,10 @@ const routes = [
         if (!req.session.user) return res.json(Params.illegal);
 
         let userid = Params.get(req, 'userid');
-        let pageNum = Params.get(req, 'pageNum');
-        if (!Params.test(userid, pageNum)) return res.json(Params.illegal);
+        let skipNum = Params.get(req, 'skipNum');
+        if (!Params.test(userid, skipNum)) return res.json(Params.illegal);
         try {
-            let list = await cs.history(req.session.user.userid, userid, pageNum, 10);
+            let list = await cs.history(req.session.user.userid, userid, skipNum, 10);
             res.json(Params.success(list));
         } catch (e) {
             res.json(Params.failure(e));
@@ -156,6 +156,4 @@ const routes = [
     }),
 ];
 
-module.exports = app => {
-    for (let r of routes) r.setting(app)
-};
+module.exports = app => routes.forEach(e => e.setting(app));

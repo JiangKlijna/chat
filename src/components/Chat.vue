@@ -16,7 +16,7 @@
                 </article>
             </div>
         </div>
-        <button v-on:click="onClickMore" mdui-tooltip="{content: '加载更多'}" class="mdui-btn mdui-btn-icon mdui-btn-dense mdui-color-theme-accent mdui-ripple"><i class="mdui-icon material-icons">add</i></button>
+        <button v-on:click="onClickMore" v-if="isMore" mdui-tooltip="{content: '加载更多'}" class="mdui-btn mdui-btn-icon mdui-btn-dense mdui-color-theme-accent mdui-ripple"><i class="mdui-icon material-icons">add</i></button>
     </div>
 </template>
 
@@ -30,6 +30,7 @@ export default {
             msg: '',
             // 聊天列表
             list: [],
+            isMore: true,
             // 指代聊天的那个人
             username: null,
         }
@@ -53,6 +54,17 @@ export default {
             return util.toChatTime(time);
         },
         onClickMore: function () {
+            var self = this;
+            axios.post(R.URL.CHAT_HISTORY_URL, {userid: this.$route.params.userid, skipNum: this.list.length.toString()}).then(function (obj) {
+                if (obj.data.code !== 0) return util.dialog.error(R.Str.ERROR_NETWORK);
+                if (obj.data.obj.length === 0) {
+                    self.isMore = false;
+                    return;
+                }
+                for (var i in obj.data.obj) {
+                    self.list.push(obj.data.obj[i]);
+                }
+            })
         },
         getTitleUsername: function (userid) {
             var self = this;

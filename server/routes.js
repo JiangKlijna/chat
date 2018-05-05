@@ -147,6 +147,7 @@ const routes = [
         let userid = Params.get(req, 'userid');
         let skipNum = Params.get(req, 'skipNum');
         if (!Params.test(userid, skipNum)) return res.json(Params.illegal);
+        skipNum = parseInt(skipNum);
         try {
             let list = await cs.history(req.session.user.userid, userid, skipNum, 10);
             res.json(Params.success(list));

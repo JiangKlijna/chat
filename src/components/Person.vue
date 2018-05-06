@@ -82,14 +82,20 @@ export default {
                 if (self.dialog_type === 'text') self.username = self.dialog_value;
                 util.dialog.info("修改成功!");
             });
+        },
+        onUserCallBack: function () {
+            this.username = app.user.username;
+            this.imgurl = util.mdAvatar(80, this.username);
         }
     },
     mounted: function () {
         // 如果未登陆则跳转到login
         if (app.user === null) return this.$router.push('/login');
-        this.username = app.user.username;
-        this.imgurl = util.mdAvatar(80, this.username);
         this.dialog = new mdui.Dialog(this.$refs.input_dialog);
+        window.kid = this;
+    },
+    beforeDestroy: function () {
+        window.kid = null;
     }
 }
 </script>

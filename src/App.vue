@@ -37,9 +37,12 @@ export default {
         onIsLogin: function () {
             var self = this;
             axios.post(R.URL.ISLOGIN_URL).then(function (obj) {
-                if (obj.data.code !== 0) util.dialog.error(R.Str.ERROR_NETWORK);
+                if (obj.data.code !== 0) return util.dialog.error(R.Str.ERROR_NETWORK);
                 if (obj.data.obj == null) self.$router.push('login');
-                else self.user = obj.data.obj;
+                else {
+                    self.user = obj.data.obj;
+                    if (window.kid) window.kid.onUserCallBack();
+                }
             })
         },
         onLogout: function () {
